@@ -4,7 +4,7 @@
 
 * Uses Bundler and Rails. MongoDB 7
 
-* A "bundle install" and the project is running
+* A "bundle install" and the project is fine to go
 
 * Database creation
 
