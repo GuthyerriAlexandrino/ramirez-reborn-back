@@ -1,15 +1,10 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby version 3.2.2
 
-Things you may want to cover:
+* Uses Bundler and Rails. MongoDB 7
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
+* A "bundle install" and the project is running
 
 * Database creation
 
