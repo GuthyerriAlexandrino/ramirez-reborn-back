@@ -1,0 +1,26 @@
+development:
+  clients:
+    default:
+      database: admin
+      hosts:
+        - mongodb+srv://ramirez-a7eae1d8.mongo.ondigitalocean.co
+      options:
+  options:
+
+production:
+  clients:
+    default:
+      database: admin
+      hosts:
+        - mongodb+srv://ramirez-a7eae1d8.mongo.ondigitalocean.co
+      options:
+  options:
+    
+test:
+  clients:
+    default:
+      database: ramirez
+      hosts:
+        - mongodb+srv://ramirez-a7eae1d8.mongo.ondigitalocean.co
+      options:
+  options:
