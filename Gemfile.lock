@@ -72,8 +72,6 @@ GEM
     awesome_print (1.9.2)
     base64 (0.1.1)
     bcrypt (3.1.19)
-    bootsnap (1.4.1)
-      msgpack (~> 1.0)
     bson (4.15.0)
     builder (3.2.4)
     concurrent-ruby (1.2.2)
@@ -180,9 +178,8 @@ GEM
       rspec-core (~> 3.3)
       rspec-expectations (~> 3.3)
       rspec-mocks (~> 3.3)
-    msgpack (1.7.2)
     multi_json (1.15.0)
-    net-imap (0.3.7)
+    net-imap (0.4.0)
       date
       net-protocol
     net-pop (0.1.2)
@@ -193,6 +190,8 @@ GEM
       net-protocol
     nio4r (2.5.9)
     nokogiri (1.15.4-x64-mingw-ucrt)
+      racc (~> 1.4)
+    nokogiri (1.15.4-x86_64-linux)
       racc (~> 1.4)
     os (1.1.4)
     parallel (1.23.0)
@@ -243,7 +242,7 @@ GEM
     rdoc (6.5.0)
       psych (>= 4.0.0)
     regexp_parser (2.8.1)
-    reline (0.3.8)
+    reline (0.3.9)
       io-console (~> 0.5)
     representable (3.2.0)
       declarative (< 0.1.0)
@@ -282,6 +281,18 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.29.0)
       parser (>= 3.2.1.0)
+    rubocop-capybara (2.19.0)
+      rubocop (~> 1.41)
+    rubocop-factory_bot (2.24.0)
+      rubocop (~> 1.33)
+    rubocop-rails (2.21.2)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 1.33.0, < 2.0)
+    rubocop-rspec (2.24.1)
+      rubocop (~> 1.33)
+      rubocop-capybara (~> 2.17)
+      rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     seedbank (0.5.0)
@@ -316,11 +327,11 @@ GEM
 
 PLATFORMS
   x64-mingw-ucrt
+  x86_64-linux
 
 DEPENDENCIES
   awesome_print
   bcrypt
-  bootsnap (= 1.4.1)
   database_cleaner-mongoid
   debug
   faker
@@ -335,6 +346,8 @@ DEPENDENCIES
   rails (= 7.0.3)
   rspec-rails
   rubocop
+  rubocop-rails
+  rubocop-rspec
   seedbank
   simplecov
   tzinfo-data
