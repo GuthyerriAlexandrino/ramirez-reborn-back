@@ -3,7 +3,7 @@ development:
     default:
       database: admin
       hosts:
-        - mongodb+srv://ramirez-a7eae1d8.mongo.ondigitalocean.co
+        - 127.0.0.1:27017
       options:
   options:
 
@@ -12,15 +12,15 @@ production:
     default:
       database: admin
       hosts:
-        - mongodb+srv://ramirez-a7eae1d8.mongo.ondigitalocean.co
+        - 127.0.0.1:27017
       options:
   options:
-    
+
 test:
   clients:
     default:
       database: ramirez
       hosts:
-        - mongodb+srv://ramirez-a7eae1d8.mongo.ondigitalocean.co
+        - 127.0.0.1:27017
       options:
   options:

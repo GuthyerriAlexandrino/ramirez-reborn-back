@@ -1,0 +1,11 @@
+AllCops:
+  NewCops: enable
+  Include:
+    - 'app/**/*.rb'
+  Exclude:
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'lib/**/*'
+    - 'db/**/*'
+    - 'public/**/*'
+  TargetRubyVersion: 3.2
