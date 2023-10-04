@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A User object who implements its scope, validations and relations
 class User
   include Mongoid::Document
@@ -28,9 +30,9 @@ class User
 
   # Validations
   validates :name, length: { minimum: 1, maximum: 160 }
-  validates :services_price, length: { minimum: 2, maximum: 2 }, presence: false
-  validates :city, length: { minimum: 1, maximum: 70 }, presence: false
-  validates :state, length: { minimum: 2, maximum: 2 }, presence: false
-  validates :bio, length: { minimum: 20, maximum: 1000 }, presence: false
+  validates :services_price, length: { minimum: 2, maximum: 2 }, allow_nil: true
+  validates :city, length: { minimum: 1, maximum: 70 }, allow_nil: true
+  validates :state, length: { minimum: 2, maximum: 2 }, allow_nil: true
+  validates :bio, length: { minimum: 20, maximum: 1000 }, allow_nil: true
   validates :email, uniqueness: true
 end

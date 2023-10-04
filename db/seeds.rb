@@ -34,7 +34,7 @@ rng = Random.new
 
 25.times do
   password = Faker::Internet.password
-  User.create(
+  User.create!(
     name: Faker::Name.name,
     email: Faker::Internet.email,
     password: password,
@@ -48,7 +48,7 @@ end
 
 25.times do
   password = Faker::Internet.password
-  User.create(
+  User.create!(
     name: Faker::Name.name,
     email: Faker::Internet.email,
     password: password,
@@ -57,7 +57,7 @@ end
   )
 end
 
-User.create(
+User.create!(
   name: "Ramirez",
   email: "guthyerri@davi.alice",
   password: "e o que he man?",

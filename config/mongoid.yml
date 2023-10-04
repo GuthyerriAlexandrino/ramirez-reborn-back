@@ -1,7 +1,7 @@
 development:
   clients:
     default:
-      database: admin
+      database: ramirez
       hosts:
         - 127.0.0.1:27017
       options:
@@ -10,7 +10,7 @@ development:
 production:
   clients:
     default:
-      database: admin
+      database: ramirez_prod
       hosts:
         - 127.0.0.1:27017
       options:
@@ -19,7 +19,7 @@ production:
 test:
   clients:
     default:
-      database: ramirez
+      database: ramirez_test
       hosts:
         - 127.0.0.1:27017
       options:
