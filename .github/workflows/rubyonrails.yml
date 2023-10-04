@@ -54,21 +54,4 @@ jobs:
            chmod u+x bin/rails
            chmod u+x bin/bundle
       - name: Lint Ruby files
-        run: bin/bundle exec rubocop --parallel --autocorrect
-
-  doc:
-    runs-on: ubuntu-latest
-    steps:
-     - name: Checkout code
-       uses: actions/checkout@v3
-     - name: Install Ruby and gems
-       uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
-       with:
-          ruby-version: '3.2'
-          bundler-cache: true
-     - name: Setup permissions
-       run: |
-           chmod u+x bin/rails
-           chmod u+x bin/bundle
-     - name: Generate Documentation
-       run: bin/bundle exec yard stats app/**/*.rb -o docs --list-undoc --no-private --protected
+        run: bin/bundle exec rubocop --parallel
