@@ -31,6 +31,7 @@ jobs:
         run: |
           chmod u+x bin/rails
           chmod u+x bin/bundle
+          chmod u+x bin/rake
       # Add or replace database setup steps here
       - name: Set up database schema
         run: bin/rails db:seed
@@ -52,6 +53,7 @@ jobs:
         run: |
           chmod u+x bin/rails
           chmod u+x bin/bundle
+          chmod u+x bin/rake
       - name: Lint Ruby files
         run: bin/bundle exec rubocop --parallel --autocorrect
 
@@ -69,5 +71,6 @@ jobs:
        run: |
           chmod u+x bin/rails
           chmod u+x bin/bundle
+          chmod u+x bin/rake
      - name: Generate Documentation
        run: bin/bundle exec yardoc -o docs
