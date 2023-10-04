@@ -8,4 +8,5 @@ AllCops:
     - 'lib/**/*'
     - 'db/**/*'
     - 'public/**/*'
+    - 'vendor/**/*'
   TargetRubyVersion: 3.2
