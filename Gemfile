@@ -72,6 +72,7 @@ group :development, :test do
   gem 'mongoid-rspec'
   gem 'database_cleaner-mongoid'
   gem 'simplecov'
+  gem 'solargraph'
 end
 
 group :development do
