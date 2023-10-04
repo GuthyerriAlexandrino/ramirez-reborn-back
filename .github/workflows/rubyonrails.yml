@@ -10,22 +10,7 @@ on:
     branches: [ "develop" ]
   pull_request:
     branches: [ "develop" ]
-jobs:
-  configure_files:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Install Ruby and gems
-        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
-        with:
-          ruby-version: '3.2'
-          bundler-cache: true
-      - name: Give Permissions
-        run: |
-          chmod u+x bin/rails
-          chmod u+x bin/bundle
-          
+jobs: 
   test:
     runs-on: ubuntu-latest
     env:
@@ -42,6 +27,10 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
+      - name: Give Permissions
+        run: |
+          chmod u+x bin/rails
+          chmod u+x bin/bundle
       # Add or replace database setup steps here
       - name: Set up database schema
         run: bin/rails db:seed
@@ -59,6 +48,10 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
+      - name: Give Permissions
+        run: |
+          chmod u+x bin/rails
+          chmod u+x bin/bundle
       - name: Lint Ruby files
         run: bin/bundle exec rubocop --parallel --autocorrect
 
@@ -70,6 +63,11 @@ jobs:
      - name: Install Ruby and gems
        uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
        with:
+          ruby-version: '3.2'
           bundler-cache: true
+     - name: Give Permissions
+       run: |
+          chmod u+x bin/rails
+          chmod u+x bin/bundle
      - name: Generate Documentation
        run: bin/bundle exec yardoc -o docs
