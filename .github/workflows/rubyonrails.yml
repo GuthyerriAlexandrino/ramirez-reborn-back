@@ -31,9 +31,10 @@ jobs:
         run: |
            chmod u+x bin/rails
            chmod u+x bin/bundle
+           chmod u+x bin/rake
       # Add or replace database setup steps here
       - name: Set up database schema
-        run: bin/rails db:seed
+        run: bin/rake prepare_db
       # Add or replace test runners here
       - name: Run tests
         run: bin/bundle exec rspec -f progress
@@ -70,4 +71,4 @@ jobs:
            chmod u+x bin/rails
            chmod u+x bin/bundle
      - name: Generate Documentation
-       run: bin/bundle exec yardoc -o docs
+       run: bin/bundle exec yard stats app/**/*.rb -o docs --list-undoc --no-private --protected
