@@ -1,6 +1,10 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+def os_is(re)
+  RbConfig::CONFIG['host_os'] =~ re
+end
+
 ruby "3.2.2"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
@@ -27,6 +31,8 @@ gem "google-cloud-storage"
 
 # Rubocop lint features
 gem "rubocop"
+gem "rubocop-rails"
+gem "rubocop-rspec"
 
 # Yard documentation tool
 gem "yard"
@@ -47,7 +53,11 @@ gem "yard"
 gem "tzinfo-data"
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", '=1.4.1', require: false
+if RUBY_PLATFORM =~ /x64-mingw-ucrt/
+  gem "bootsnap", '=1.4.1', require: false
+else
+  gem "bootsnap", require: false
+end
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem "rack-cors"
