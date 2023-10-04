@@ -3,6 +3,8 @@ class User
   include Mongoid::Document
   include Mongoid::Timestamps
   include ActiveModel::SecurePassword
+  include ActiveModel::Validations
+
   has_secure_password
   before_save { email.downcase! }
 
@@ -25,10 +27,10 @@ class User
   scope :following, -> { Following.where(user_id: :id) }
 
   # Validations
-  validates_length_of :name, minimum: 1, maximum: 160
-  validates_length_of :services_price, minimum: 2, maximum: 2, allow_nil: true
-  validates_length_of :city, minimum: 1, maximum: 70, allow_nil: true
-  validates_length_of :state, minimum: 2, maximum: 2, allow_nil: true
-  validates_length_of :bio, minimum: 20, maximum: 1000, allow_nil: true
-  validates_uniqueness_of :email
+  validates :name, length: { minimum: 1, maximum: 160 }
+  validates :services_price, length: { minimum: 2, maximum: 2 }, presence: false
+  validates :city, length: { minimum: 1, maximum: 70 }, presence: false
+  validates :state, length: { minimum: 2, maximum: 2 }, presence: false
+  validates :bio, length: { minimum: 20, maximum: 1000 }, presence: false
+  validates :email, uniqueness: true
 end
