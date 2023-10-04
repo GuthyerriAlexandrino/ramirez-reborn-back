@@ -11,6 +11,14 @@ on:
   pull_request:
     branches: [ "develop" ]
 jobs:
+  configure_files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Give Permissions
+        run: |
+          chmod u+x bin/rails
+          chmod u+x bin/bundle
+          
   test:
     runs-on: ubuntu-latest
     env:
