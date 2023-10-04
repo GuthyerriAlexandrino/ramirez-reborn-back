@@ -12,7 +12,7 @@ on:
     branches: [ "develop" ]
 jobs: 
   test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     env:
       RAILS_ENV: test
       DATABASE_URL: "127.0.0.1:27017"
@@ -27,11 +27,6 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
-      - name: Give Permissions
-        run: |
-          chmod u+x bin/rails
-          chmod u+x bin/bundle
-          chmod u+x bin/rake
       # Add or replace database setup steps here
       - name: Set up database schema
         run: bin/rails db:seed
@@ -40,7 +35,7 @@ jobs:
         run: bin/bundle exec rspec -f progress
 
   lint:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -49,16 +44,11 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: true
-      - name: Give Permissions
-        run: |
-          chmod u+x bin/rails
-          chmod u+x bin/bundle
-          chmod u+x bin/rake
       - name: Lint Ruby files
         run: bin/bundle exec rubocop --parallel --autocorrect
 
   doc:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
      - name: Checkout code
        uses: actions/checkout@v3
@@ -67,10 +57,5 @@ jobs:
        with:
           ruby-version: '3.2'
           bundler-cache: true
-     - name: Give Permissions
-       run: |
-          chmod u+x bin/rails
-          chmod u+x bin/bundle
-          chmod u+x bin/rake
      - name: Generate Documentation
        run: bin/bundle exec yardoc -o docs
