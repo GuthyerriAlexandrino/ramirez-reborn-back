@@ -25,6 +25,9 @@ gem "puma", "= 5.0"
 # Firebase storage service
 gem "google-cloud-storage"
 
+# Rubocop lint features
+gem "rubocop"
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 

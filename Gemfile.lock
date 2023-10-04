@@ -68,6 +68,7 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.5)
       public_suffix (>= 2.0.2, < 6.0)
+    ast (2.4.2)
     awesome_print (1.9.2)
     base64 (0.1.1)
     bcrypt (3.1.19)
@@ -140,6 +141,7 @@ GEM
     irb (1.8.1)
       rdoc
       reline (>= 0.3.8)
+    json (2.6.3)
     jwt (2.7.1)
     kaminari-actionview (1.2.2)
       actionview
@@ -148,6 +150,7 @@ GEM
     kaminari-mongoid (1.0.2)
       kaminari-core (~> 1.0)
       mongoid
+    language_server-protocol (3.17.0.3)
     loofah (2.21.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -192,6 +195,10 @@ GEM
     nokogiri (1.15.4-x64-mingw-ucrt)
       racc (~> 1.4)
     os (1.1.4)
+    parallel (1.23.0)
+    parser (3.2.2.4)
+      ast (~> 2.4.1)
+      racc
     psych (5.1.0)
       stringio
     public_suffix (5.0.3)
@@ -231,9 +238,11 @@ GEM
       rake (>= 12.2)
       thor (~> 1.0)
       zeitwerk (~> 2.5)
+    rainbow (3.1.1)
     rake (13.0.6)
     rdoc (6.5.0)
       psych (>= 4.0.0)
+    regexp_parser (2.8.1)
     reline (0.3.8)
       io-console (~> 0.5)
     representable (3.2.0)
@@ -259,6 +268,21 @@ GEM
       rspec-mocks (~> 3.12)
       rspec-support (~> 3.12)
     rspec-support (3.12.1)
+    rubocop (1.56.4)
+      base64 (~> 0.1.1)
+      json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
+      parallel (~> 1.10)
+      parser (>= 3.2.2.3)
+      rainbow (>= 2.2.2, < 4.0)
+      regexp_parser (>= 1.8, < 3.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.28.1, < 2.0)
+      ruby-progressbar (~> 1.7)
+      unicode-display_width (>= 2.4.0, < 3.0)
+    rubocop-ast (1.29.0)
+      parser (>= 3.2.1.0)
+    ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     seedbank (0.5.0)
       rake (>= 10.0)
@@ -282,6 +306,7 @@ GEM
     tzinfo-data (1.2023.3)
       tzinfo (>= 1.0.0)
     uber (0.1.0)
+    unicode-display_width (2.5.0)
     webrick (1.8.1)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -308,6 +333,7 @@ DEPENDENCIES
   rack-cors
   rails (= 7.0.3)
   rspec-rails
+  rubocop
   seedbank
   simplecov
   tzinfo-data
