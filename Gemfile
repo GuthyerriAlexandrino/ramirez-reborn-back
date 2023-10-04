@@ -28,6 +28,9 @@ gem "google-cloud-storage"
 # Rubocop lint features
 gem "rubocop"
 
+# Yard documentation tool
+gem "yard"
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
