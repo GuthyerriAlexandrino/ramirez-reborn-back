@@ -53,11 +53,11 @@ gem "yard"
 gem "tzinfo-data"
 
 # Reduces boot times through caching; required in config/boot.rb
-if RUBY_PLATFORM =~ /x64-mingw-ucrt/
-  gem "bootsnap", '=1.4.1', require: false
-else
-  gem "bootsnap", require: false
-end
+# if RUBY_PLATFORM =~ /x64-mingw-ucrt/
+#   gem "bootsnap", '=1.4.1', require: false
+# else
+#   gem "bootsnap", require: false
+# end
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem "rack-cors"
