@@ -10,3 +10,7 @@ AllCops:
     - 'public/**/*'
     - 'vendor/**/*'
   TargetRubyVersion: 3.2
+
+require:
+  - rubocop-rails
+  - rubocop-rspec

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Class responsible for all application-specific needs and rules
 class ApplicationController < ActionController::API
   before_action :set_header
 
@@ -17,6 +20,6 @@ class ApplicationController < ActionController::API
 
   def set_header
     @header = request.headers['Authorization']
-    @header = @header.split(' ').last if @header
+    @header = @header.split.last if @header
   end
 end
