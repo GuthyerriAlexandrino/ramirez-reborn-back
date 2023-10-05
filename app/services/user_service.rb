@@ -3,7 +3,7 @@
 # Service responsible for creating user views
 module UserService
   # Returns all user data
-  # @return [Array[Symbol, Hash<Array>]]
+  # @return [Array<Symbol, Hash<Array>>]
   def self.all_permited
     [:name, :email, :photographer, :password, :password_confirmation,
      :city, :state,
