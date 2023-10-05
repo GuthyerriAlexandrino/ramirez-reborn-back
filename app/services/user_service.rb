@@ -2,15 +2,19 @@
 
 # Service reponse to vision user
 module UserService
-  def UserService.all_permited
+
+  # Permitted parameters for user creation/update.
+  def self.all_permited
     [:name, :email, :photographer, :password, :password_confirmation,
      :city, :state,
-     :bio, :profile_img, :specialization => [], :services_price => []]
+     :bio, :profile_img, { specialization: [], services_price: [] }]
   end
 
-  def UserService.search_view
-    [:name, :email, :profile_img, :specialization, :services_price, :city, :state, :views, :bio]
+  # Fields to view when fetching a user.
+  def self.search_view
+    %i[name email profile_img specialization services_price city state views bio]
   end
 
+  # Custom exception for invalid users.
   class InvalidUserException < StandardError; end
 end
