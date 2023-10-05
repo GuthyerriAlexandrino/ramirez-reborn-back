@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Service reponsible for creating user views
 module UserService
   # Permitted parameters for user creation/update.
