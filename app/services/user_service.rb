@@ -2,7 +2,6 @@
 
 # Service reponse to vision user
 module UserService
-
   # Permitted parameters for user creation/update.
   def self.all_permited
     [:name, :email, :photographer, :password, :password_confirmation,
