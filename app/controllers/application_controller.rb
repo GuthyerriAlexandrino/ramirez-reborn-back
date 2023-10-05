@@ -4,6 +4,8 @@
 class ApplicationController < ActionController::API
   before_action :set_header
 
+  # Authorizes user actions on Ramirez
+  # @return [User, Json]
   def authorize_request
     return User.find_by(email: 'guthyerri@davi.alice') unless @header != 'debug'
 
@@ -18,6 +20,7 @@ class ApplicationController < ActionController::API
 
   private
 
+  # @!visibility private
   def set_header
     @header = request.headers['Authorization']
     @header = @header.split.last if @header
