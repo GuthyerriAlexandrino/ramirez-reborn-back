@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-#
+
 require 'user_service'
 
 describe UserService do
