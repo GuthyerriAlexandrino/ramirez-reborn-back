@@ -1,9 +1,8 @@
 # frozen_string_literal: true
-
 # Service responsible for creating user views
 module UserService
   # Returns all user data
-  # @return [Hash<Symbol, Hash<Array>]
+  # @return Array[Symbol, Hash<Array>]
   def self.all_permited
     [:name, :email, :photographer, :password, :password_confirmation,
      :city, :state,
@@ -11,7 +10,7 @@ module UserService
   end
 
   # Fields to view when fetching a user.
-  # @return [Hash<Symbol, Hash<Symbol>]
+  # @return [Array<Symbol>]
   def self.search_view
     %i[name email profile_img specialization services_price city state views bio]
   end

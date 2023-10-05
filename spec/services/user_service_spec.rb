@@ -1,5 +1,6 @@
-
-require 'user_service' # Certifique-se de importar o módulo UserService
+# frozen_string_literal: true
+#
+require 'user_service'
 
 describe UserService do
   context 'When all parameters are allowed' do
