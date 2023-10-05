@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Service responsible for creating user views
 module UserService
   # Returns all user data
