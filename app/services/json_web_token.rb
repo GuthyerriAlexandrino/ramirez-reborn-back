@@ -8,7 +8,7 @@ class JsonWebToken
   # Method to encode a payload into a JWT
   # @param payload [Hash]
   # @param exp [Integer]
-# @return [String]
+  # @return [String]
   def self.encode(payload, exp = 24.hours.from_now)
     payload[:exp] = exp.to_i
     JWT.encode(payload, SECRET_KEY)
