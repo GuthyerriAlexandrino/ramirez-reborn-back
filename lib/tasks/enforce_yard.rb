@@ -9,7 +9,7 @@ module EnforceYard
     Open3::popen3(exec_opt) do | stdin, stdout, stderr |
       output = stdout.readlines
       line = output[6]
-      if line[1..2].to_i == percentage
+      if line[1...line.index('.')].to_i == percentage
         print "Ok.#{line}"
         exit(true)
       end
