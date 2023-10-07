@@ -13,7 +13,6 @@ class UsersController < ApplicationController
       return render json: { error: 'Page field must be integer' },
                     status: :bad_request
     end
-
     filters = FiltersService.matching_params(request.GET)
     location = FiltersService.location_params(request.GET[:location])
     order = FiltersService.order_params(request.GET[:orderBy])
@@ -29,7 +28,6 @@ class UsersController < ApplicationController
     user = authorize_request
     return if user.nil?
     return render json: { error: 'User cookie and id dont match' }, status: :bad_request if user.id.to_s != params[:id]
-
     render json: user, status: :ok
   end
 
@@ -37,7 +35,6 @@ class UsersController < ApplicationController
   # Search photographers that the user is following
   def following
     photographer = get_photographer
-
     render json: photographer.following, status: :ok
   rescue Mongoid::Errors::InvalidFind
     render json: { error: 'Invalid photographer' }, status: :bad_request
@@ -50,13 +47,11 @@ class UsersController < ApplicationController
   def profile_image
     user = authorize_request
     return if user.nil?
-
     bucket = FireStorageService.instance.img_bucket
     file = params[:image]
     filename = "#{user.name}/profile#{Rack::Mime::MIME_TYPES.invert[file.content_type]}"
     bucket.create_file(file.tempfile, filename)
     update_user = User.find(user.id)
-
     if update_user.update(profile_img: filename)
       render json: filename, status: :ok
     else
