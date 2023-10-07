@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     unless FiltersService.check_pagination(params[:page])
       return render json: { error: 'Page field must be integer' },
                     status: :bad_request
-     end
+    end
     filters = FiltersService.matching_params(request.GET)
     location = FiltersService.location_params(request.GET[:location])
     order = FiltersService.order_params(request.GET[:orderBy])
@@ -28,6 +28,7 @@ class UsersController < ApplicationController
     user = authorize_request
     return if user.nil?
     return render json: { error: 'User cookie and id dont match' }, status: :bad_request if user.id.to_s != params[:id]
+
     render json: user, status: :ok
   end
 
@@ -47,6 +48,7 @@ class UsersController < ApplicationController
   def profile_image
     user = authorize_request
     return if user.nil?
+
     bucket = FireStorageService.instance.img_bucket
     file = params[:image]
     filename = "#{user.name}/profile#{Rack::Mime::MIME_TYPES.invert[file.content_type]}"
