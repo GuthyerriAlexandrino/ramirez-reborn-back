@@ -2,6 +2,16 @@
 
 # This module encapsulates filter-related functionality
 module FiltersService
+
+
+  def self.matching_params(params)
+    new_hash = { photographer: true }
+    params.each_pair { |k, v| new_hash[k.to_sym] = v if check_param(k, v) }
+    new_hash[:name] = /.*#{params[:name]}.*/ unless !params.key?(:name) || params[:name] == ''
+    new_hash[:specialization.exists] = true
+    new_hash
+  end
+
   # Class method that checks whether a key-value pair meets specific conditions
   # @return [Boolean]
   def self.check_param(key, value)
