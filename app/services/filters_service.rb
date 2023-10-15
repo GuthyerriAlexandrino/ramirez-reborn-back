@@ -3,12 +3,25 @@
 # This module encapsulates filter-related functionality
 module FiltersService
 
-
+  # Class method Public (self) called 'matching_params' that takes a 'params' parameter
+  # @return [Hash]
   def self.matching_params(params)
+
+    #Local variable 'new_hash' is created to store a hash with initial value { photographer: true }
     new_hash = { photographer: true }
-    params.each_pair { |k, v| new_hash[k.to_sym] = v if check_param(k, v) }
+
+    # Iterating through key-value pairs in 'params' hash using 'each_pair' method
+    params.each_pair { |k, v|
+    #Condition to check if key-value meets certain criteria using 'check_param' method
+    new_hash[k.to_sym] = v if check_param(k, v) }
+
+    #Sets a key in the 'new_hash' hash to a value that is a regular expression
     new_hash[:name] = /.*#{params[:name]}.*/ unless !params.key?(:name) || params[:name] == ''
+
+    #Sets a key 'specialization.exists' in the hash 'new_hash' with the value 'true'
     new_hash[:specialization.exists] = true
+
+    #Returns the hash 'new_hash' with the modifications made
     new_hash
   end
 
