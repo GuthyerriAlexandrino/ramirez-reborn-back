@@ -2,7 +2,6 @@
 
 # This module encapsulates filter-related functionality
 module FiltersService
-
   # Method responsible for returning photographer search parameters that are valid
   # @return [Hash]
   # @param params [Hash]
@@ -25,7 +24,6 @@ module FiltersService
   # @param key [String]
   # @param value [String, Integer]
   def self.check_param(key, value)
-
     key = key.to_sym
 
     condition1 = %i[name specialization].include?(key)
