@@ -39,4 +39,38 @@ describe FiltersService do
 
   end
 
+  context "Location Params" do
+    it 'returns a list with city criteria when location is a city' do
+      location = 'New York'
+      result = FiltersService.location_params(location)
+      expect(result).to include({ city: 'New York' })
+    end
+
+    it 'returns a list with state criteria when location is a state' do
+      location = 'California'
+      result = FiltersService.location_params(location)
+      expect(result).to include({ state: 'California' })
+    end
+
+    it 'returns an empty list when location is nil' do
+      location = nil
+      result = FiltersService.location_params(location)
+      expect(result).to eq([])
+    end
+
+    it 'returns an empty list when location is an empty string' do
+      location = ''
+      result = FiltersService.location_params(location)
+      expect(result).to eq([])
+    end
+
+    it 'returns a list with both city and state criteria when location is a city and state' do
+      location = 'Los Angeles, California'
+      result = FiltersService.location_params(location)
+      expect(result).to include({ city: 'Los Angeles, California' }, { state: 'Los Angeles, California' })
+    end
+
+  end
+
+
 end
