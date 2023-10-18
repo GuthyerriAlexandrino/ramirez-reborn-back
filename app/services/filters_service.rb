@@ -19,6 +19,9 @@ module FiltersService
     new_hash
   end
 
+  # Method responsible for creating photographer location criteria based on the cities or states provided
+  # @return [Hash]
+  # @param location [String]
   def self.location_params(location)
     locate = []
     locate = [{ city: location }, { state: location }] unless location.nil? || location == ''
