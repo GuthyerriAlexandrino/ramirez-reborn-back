@@ -19,6 +19,12 @@ module FiltersService
     new_hash
   end
 
+  def self.location_params(location)
+    locate = []
+    locate = [{ city: location }, { state: location }] unless location.nil? || location == ''
+    locate
+  end
+
   # Method responsible for checking whether parameters contain valid values
   # @return [Boolean]
   # @param key [String]
