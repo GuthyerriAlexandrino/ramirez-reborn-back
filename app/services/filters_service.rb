@@ -24,6 +24,9 @@ module FiltersService
     locate
   end
 
+  # Method used to create photographer sorting criteria based on the 'likes', 'views' or 'price' fields
+  # @return [Hash]
+  # @param order_by [String]
   def self.order_params(order_by)
     order = {}
     order = { order_by.to_sym => :desc } if order_by != '' && %w[likes views price].include?(order_by)
