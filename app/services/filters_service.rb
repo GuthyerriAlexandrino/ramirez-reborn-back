@@ -24,6 +24,12 @@ module FiltersService
     locate
   end
 
+  def self.order_params(order_by)
+    order = {}
+    order = { order_by.to_sym => :desc } if order_by != '' && %w[likes views price].include?(order_by)
+    order
+  end
+
   # Method responsible for checking whether parameters contain valid values
   # @return [Boolean]
   # @param key [String]
