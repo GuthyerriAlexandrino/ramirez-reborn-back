@@ -71,4 +71,27 @@ describe FiltersService do
       expect(result).to include({ city: 'Los Angeles, California' }, { state: 'Los Angeles, California' })
     end
   end
+
+  context "Order Params" do
+
+    it 'returns an empty hash when order_by is an empty string' do
+      order_by = ''
+      result = FiltersService.order_params(order_by)
+      expect(result).to eq({})
+    end
+
+    it 'returns an empty hash when order_by is not in the allowed values' do
+      order_by = 'rating'
+      result = FiltersService.order_params(order_by)
+      expect(result).to eq({})
+    end
+
+    it 'returns a hash with likes field in descending order' do
+      order_by = 'likes'
+      result = FiltersService.order_params(order_by)
+      expect(result).to eq({ likes: :desc })
+    end
+
+  end
+
 end
