@@ -109,4 +109,21 @@ describe FiltersService do
       expect(result).to eq({})
     end
   end
+
+  context "Check Pagination" do
+    it 'returns true when page is nil' do
+      page = nil
+      result = FiltersService.check_pagination(page)
+      expect(result).to be(true)
+    end
+
+    it 'returns true when page is an integer' do
+      page = 1
+      result = FiltersService.check_pagination(page)
+      expect(result).to be(true)
+    end
+
+
+  end
+
 end
