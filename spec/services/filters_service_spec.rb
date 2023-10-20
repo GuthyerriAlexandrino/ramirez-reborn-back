@@ -92,6 +92,24 @@ describe FiltersService do
       expect(result).to eq({ likes: :desc })
     end
 
+    it 'returns a hash with views field in descending order' do
+      order_by = 'views'
+      result = FiltersService.order_params(order_by)
+      expect(result).to eq({ views: :desc })
+    end
+
+    it 'returns a hash with price field in descending order' do
+      order_by = 'price'
+      result = FiltersService.order_params(order_by)
+      expect(result).to eq({ price: :desc })
+    end
+
+    it 'returns an empty hash when order_by is nil' do
+      order_by = nil
+      result = FiltersService.order_params(order_by)
+      expect(result).to eq({})
+    end
+
   end
 
 end
