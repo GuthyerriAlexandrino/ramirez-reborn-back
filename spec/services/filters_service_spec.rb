@@ -110,25 +110,23 @@ describe FiltersService do
     end
   end
 
-  context "Check Pagination" do
+  context 'Check Pagination' do
     it 'returns true when page is nil' do
       page = nil
-      result = FiltersService.check_pagination(page)
+      result = described_class.check_pagination(page)
       expect(result).to be(true)
     end
 
     it 'returns true when page is an integer' do
       page = 1
-      result = FiltersService.check_pagination(page)
+      result = described_class.check_pagination(page)
       expect(result).to be(true)
     end
 
     it 'returns true when page is a string that can be converted to an integer' do
       page = '2'
-      result = FiltersService.check_pagination(page)
+      result = described_class.check_pagination(page)
       expect(result).to be(true)
     end
-
   end
-
 end
