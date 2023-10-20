@@ -44,5 +44,9 @@ module FiltersService
     condition1 && condition2
   end
 
+  def self.check_pagination(page)
+    page.nil? || page.is_a?(Integer) || (page.is_a?(String) && !Integer(page).nil?)
+  end
+
   private_class_method :check_param
 end
