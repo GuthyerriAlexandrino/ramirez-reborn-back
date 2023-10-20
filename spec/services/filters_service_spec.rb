@@ -123,6 +123,11 @@ describe FiltersService do
       expect(result).to be(true)
     end
 
+    it 'returns true when page is a string that can be converted to an integer' do
+      page = '2'
+      result = FiltersService.check_pagination(page)
+      expect(result).to be(true)
+    end
 
   end
 
