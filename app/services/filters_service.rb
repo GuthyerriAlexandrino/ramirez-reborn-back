@@ -44,6 +44,11 @@ module FiltersService
     condition1 && condition2
   end
 
+  # Method used to check whether the given page value is valid to be used in paging queries
+  # @return [Boolean]
+  # @param page [Integer]
+  # @param page [String]
+  # @param page [nil]
   def self.check_pagination(page)
     page.nil? || page.is_a?(Integer) || (page.is_a?(String) && !Integer(page).nil?)
   end
