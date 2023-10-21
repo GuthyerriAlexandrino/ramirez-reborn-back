@@ -129,4 +129,21 @@ describe FiltersService do
       expect(result).to be(true)
     end
   end
+
+  context "Price Params" do
+    it 'returns an empty hash when both min_price and max_price are nil' do
+      params = { min_price: nil, max_price: nil }
+      result = FiltersService.price_params(params)
+      expect(result).to eq({})
+    end
+
+    it 'returns a hash with maximum price criteria when min_price is nil' do
+      params = { max_price: 50.0 }
+      result = FiltersService.price_params(params)
+      expect(result).to eq({ :services_price.elem_match => { :$lte => 50.0 } })
+    end
+
+  end
+
+
 end
