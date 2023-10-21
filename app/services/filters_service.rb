@@ -53,7 +53,7 @@ module FiltersService
 
   # Method used to create filtering criteria based on prices provided by photographers
   # @return [Hash]
-  # @params params [Hash]
+  # @param params [Hash]
   def self.price_params(params)
     min_price = params[:min_price]&.to_f
     max_price = params[:max_price]&.to_f
