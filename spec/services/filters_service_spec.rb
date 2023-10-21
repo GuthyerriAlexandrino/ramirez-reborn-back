@@ -130,32 +130,29 @@ describe FiltersService do
     end
   end
 
-  context "Price Params" do
+  context 'Price Params' do
     it 'returns an empty hash when both min_price and max_price are nil' do
       params = { min_price: nil, max_price: nil }
-      result = FiltersService.price_params(params)
+      result = described_class.price_params(params)
       expect(result).to eq({})
     end
 
     it 'returns a hash with maximum price criteria when min_price is nil' do
       params = { max_price: 50.0 }
-      result = FiltersService.price_params(params)
+      result = described_class.price_params(params)
       expect(result).to eq({ :services_price.elem_match => { :$lte => 50.0 } })
     end
 
     it 'returns a hash with minimum price criteria when max_price is nil' do
       params = { min_price: 10.0 }
-      result = FiltersService.price_params(params)
+      result = described_class.price_params(params)
       expect(result).to eq({ :services_price.elem_match => { :$gte => 10.0 } })
     end
 
     it 'returns a hash with both minimum and maximum price criteria' do
       params = { min_price: 10.0, max_price: 50.0 }
-      result = FiltersService.price_params(params)
+      result = described_class.price_params(params)
       expect(result).to eq({ :services_price.elem_match => { :$gte => 10.0, :$lte => 50.0 } })
     end
-
   end
-
-
 end
