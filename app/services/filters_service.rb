@@ -51,13 +51,12 @@ module FiltersService
     page.nil? || page.is_a?(Integer) || (page.is_a?(String) && !Integer(page).nil?)
   end
 
-
   # Method used to create filtering criteria based on prices provided by photographers
   # @return [Hash]
   # @params params [Hash]
   def self.price_params(params)
-    min_price = (params[:min_price].nil? ? nil : params[:min_price].to_f)
-    max_price = (params[:max_price].nil? ? nil : params[:max_price].to_f)
+    min_price = params[:min_price]&.to_f
+    max_price = params[:max_price]&.to_f
 
     return {} if min_price.nil? && max_price.nil?
     return { :services_price.elem_match => { :$lte => max_price } } if min_price.nil?
