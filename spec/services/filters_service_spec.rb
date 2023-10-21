@@ -71,4 +71,88 @@ describe FiltersService do
       expect(result).to include({ city: 'Los Angeles, California' }, { state: 'Los Angeles, California' })
     end
   end
+
+  context 'Order Params' do
+    it 'returns an empty hash when order_by is an empty string' do
+      order_by = ''
+      result = described_class.order_params(order_by)
+      expect(result).to eq({})
+    end
+
+    it 'returns an empty hash when order_by is not in the allowed values' do
+      order_by = 'rating'
+      result = described_class.order_params(order_by)
+      expect(result).to eq({})
+    end
+
+    it 'returns a hash with likes field in descending order' do
+      order_by = 'likes'
+      result = described_class.order_params(order_by)
+      expect(result).to eq({ likes: :desc })
+    end
+
+    it 'returns a hash with views field in descending order' do
+      order_by = 'views'
+      result = described_class.order_params(order_by)
+      expect(result).to eq({ views: :desc })
+    end
+
+    it 'returns a hash with price field in descending order' do
+      order_by = 'price'
+      result = described_class.order_params(order_by)
+      expect(result).to eq({ price: :desc })
+    end
+
+    it 'returns an empty hash when order_by is nil' do
+      order_by = nil
+      result = described_class.order_params(order_by)
+      expect(result).to eq({})
+    end
+  end
+
+  context 'Check Pagination' do
+    it 'returns true when page is nil' do
+      page = nil
+      result = described_class.check_pagination(page)
+      expect(result).to be(true)
+    end
+
+    it 'returns true when page is an integer' do
+      page = 1
+      result = described_class.check_pagination(page)
+      expect(result).to be(true)
+    end
+
+    it 'returns true when page is a string that can be converted to an integer' do
+      page = '2'
+      result = described_class.check_pagination(page)
+      expect(result).to be(true)
+    end
+  end
+
+  context 'Price Params' do
+    it 'returns an empty hash when both min_price and max_price are nil' do
+      params = { min_price: nil, max_price: nil }
+      result = described_class.price_params(params)
+      expect(result).to eq({})
+    end
+
+    it 'returns a hash with maximum price criteria when min_price is nil' do
+      params = { max_price: 50.0 }
+      result = described_class.price_params(params)
+      expect(result).to eq({ :services_price.elem_match => { :$lte => 50.0 } })
+    end
+
+    it 'returns a hash with minimum price criteria when max_price is nil' do
+      params = { min_price: 10.0 }
+      result = described_class.price_params(params)
+      expect(result).to eq({ :services_price.elem_match => { :$gte => 10.0 } })
+    end
+
+    it 'returns a hash with both minimum and maximum price criteria' do
+      params = { min_price: 10.0, max_price: 50.0 }
+      result = described_class.price_params(params)
+      expect(result).to eq({ :services_price.elem_match => { :$gte => 10.0, :$lte => 50.0 } })
+    end
+  end
 end

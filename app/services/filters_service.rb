@@ -24,6 +24,15 @@ module FiltersService
     locate
   end
 
+  # Method used to create photographer sorting criteria based on the 'likes', 'views' or 'price' fields
+  # @return [Hash]
+  # @param order_by [String]
+  def self.order_params(order_by)
+    order = {}
+    order = { order_by.to_sym => :desc } if order_by != '' && %w[likes views price].include?(order_by)
+    order
+  end
+
   # Method responsible for checking whether parameters contain valid values
   # @return [Boolean]
   # @param key [String]
@@ -33,6 +42,27 @@ module FiltersService
     condition1 = %i[name specialization].include?(key)
     condition2 = value != '' && !value.nil?
     condition1 && condition2
+  end
+
+  # Method used to check whether the given page value is valid to be used in paging queries
+  # @return [Boolean]
+  # @param page [Object]
+  def self.check_pagination(page)
+    page.nil? || page.is_a?(Integer) || (page.is_a?(String) && !Integer(page).nil?)
+  end
+
+  # Method used to create filtering criteria based on prices provided by photographers
+  # @return [Hash]
+  # @param params [Hash]
+  def self.price_params(params)
+    min_price = params[:min_price]&.to_f
+    max_price = params[:max_price]&.to_f
+
+    return {} if min_price.nil? && max_price.nil?
+    return { :services_price.elem_match => { :$lte => max_price } } if min_price.nil?
+    return { :services_price.elem_match => { :$gte => min_price } } if max_price.nil?
+
+    { :services_price.elem_match => { :$gte => min_price, :$lte => max_price } }
   end
 
   private_class_method :check_param
