@@ -20,5 +20,3 @@ class FireStorageService
     @img_bucket = @storage.bucket('ramirez-2bb46.appspot.com')
   end
 end
-
-
