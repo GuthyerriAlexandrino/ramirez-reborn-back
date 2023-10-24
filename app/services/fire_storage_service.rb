@@ -1,7 +1,7 @@
 require "google/cloud/storage"
 
+# Singleton class for Google Cloud Storage
 class FireStorageService
-  
   attr_reader :img_bucket
 
   # Method to get the singleton instance of FireStorageService
