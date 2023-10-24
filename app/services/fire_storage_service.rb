@@ -1,11 +1,13 @@
-require "google/cloud/storage"
+# frozen_string_literal: true
+
+require 'google/cloud/storage'
 
 # Singleton class for Google Cloud Storage
 class FireStorageService
   attr_reader :img_bucket
 
   # Method to get the singleton instance of FireStorageService
-  def FireStorageService.instance
+  def self.instance
     @instance ||= FireStorageService.new
   end
 
