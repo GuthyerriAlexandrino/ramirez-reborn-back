@@ -8,7 +8,7 @@ class FireStorageService
 
   # Method to get the singleton instance of FireStorageService
   def FireStorageService.instance
-    # Create a single instance of FireStorageService if it doesnt exist
+    # Create a single instance of FireStorageService if it doesn't exist
     @instance ||= FireStorageService.new
   end
 
