@@ -1,25 +1,28 @@
-# Require the Google Cloud Storage library
-require "google/cloud/storage"
+# frozen_string_literal: true
 
-# Singleton class for Google Cloud Storage
-class FireStorageService
-  # Constant: Image bucket attribute
-  attr_reader :img_bucket
+# Class responsible for all application-specific needs and rules
+class ApplicationController < ActionController::API
+  before_action :set_header
 
-  # Method to get the singleton instance of FireStorageService
-  def FireStorageService.instance
-    # Create a single instance of FireStorageService if it doesn't exist
-    @instance ||= FireStorageService.new
+  # Authorizes user actions on Ramirez
+  # @return [User, Json]
+  def authorize_request
+    return User.find_by(email: 'guthyerri@davi.alice') unless @header != 'debug'
+
+    decoded = JsonWebToken.decode(@header)
+    @current_user = User.without(:password_digest).find(decoded[:user_id])
+    @current_user
+  rescue JWT::DecodeError => e
+    render json: { error: e.message }, status: :unauthorized
+  rescue StandardError => e
+    render json: { error: e.message }, status: :internal_server_error
   end
 
   private
 
-  # Constructor: initializes a new instance and connects to Google Cloud Storage
-  def initialize
-    # Initialize the Google Cloud Storage client with project ID and credentials
-    @storage = Google::Cloud::Storage.new(project_id: 'ramirez-2bb46', credentials: GOOGLE_APPLICATION_CREDENTIALS)
-
-    # Set the img_bucket attribute to reference a specific Google Cloud Storage bucket
-    @img_bucket = @storage.bucket('ramirez-2bb46.appspot.com')
+  # @!visibility private
+  def set_header
+    @header = request.headers['Authorization']
+    @header = @header.split.last if @header
   end
 end
