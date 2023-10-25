@@ -9,18 +9,19 @@ class UsersController < ApplicationController
   # GET /users
   # Search all users by filter
   def index
-    unless FiltersService.check_pagination(params[:page])
-      return render json: { error: 'Page field must be integer' },
-                    status: :bad_request
-    end
+    return render json: { error: 'Page field must be integer' }, status: :bad_request unless FiltersService.check_pagination(params[:page])
+
     filters = FiltersService.matching_params(request.GET)
     location = FiltersService.location_params(request.GET[:location])
     order = FiltersService.order_params(request.GET[:orderBy])
     price = FiltersService.price_params(min_price: request.GET[:minPrice], max_price: request.GET[:maxPrice])
+
     @users = User.where(filters.merge(price)).only(UserService.search_view).order_by(order)
     @users = @users.any_of(*location) unless location.empty?
+
     render json: @users.page(params[:page])
   end
+
 
   # GET user/1
   # Search users by id
