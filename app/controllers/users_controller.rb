@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # Class controller user
 class UsersController < ApplicationController
   ActionController::Parameters.action_on_unpermitted_parameters = :raise
@@ -8,6 +9,7 @@ class UsersController < ApplicationController
   # GET /users
   # Search all users by filter
   def index
+
     return render json: { error: 'Page field must be integer' }, status: :bad_request unless FiltersService.check_pagination(params[:page])
     filters = FiltersService.matching_params(request.GET)
     location = FiltersService.location_params(request.GET[:location])
@@ -23,6 +25,7 @@ class UsersController < ApplicationController
   def user_data
     user = authorize_request
     return if user.nil?
+
     return render json: { error: 'User cookie and id dont match' }, status: :bad_request if user.id.to_s != params[:id]
     render json: user, status: :ok
   end
@@ -42,13 +45,16 @@ class UsersController < ApplicationController
   # Update user photo
   def profile_image
     user = authorize_request
+
     return unless user
     bucket = FireStorageService.instance.img_bucket
     filename = "#{user.name}/profile.#{Rack::Mime::MIME_TYPES.invert[params[:image].content_type]}"
     bucket.create_file(params[:image].tempfile, filename)
     update_user_and_render_response(user, filename)
   end
+
   private
+
   def update_user_and_render_response(user, filename)
     update_user = User.find(user.id)
     if update_user.update(profile_img: filename)
@@ -63,5 +69,4 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
   end
-
 end
