@@ -63,57 +63,5 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
   end
-  private
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user
-    @user = User.where(id: params[:id]).first
-  end
-  def get_photographer
-    user = authorize_request
-    return nil if user.nil?
-
-    User.find(params[:id])
-  end
-  # Only allow a list of trusted parameters through.
-  def user_params
-    params.require(:user).permit(UserService.all_permited)
-  end
-
-  # PUT /users/1
-  #  update user datas
-  def update
-    user = authorize_request
-    return if user.nil?
-    return render json: { error: 'Invalid user token' }, status: :unprocessable_entity if user.id.to_s != params[:id]
-    u_params = process_user_params(user)
-    render_updated_user(user, u_params)
-  end
-
-  private
-
-  def process_user_params(user)
-    u_params = user_params
-    u_params[:photographer] = true if user.photographer
-    validate_specializations(u_params)
-    u_params
-  end
-
-  def validate_specializations(u_params)
-    u_params[:specialization].each do |s|
-      unless SpecializationService.instance.specializations.include?(s)
-        return render json: { error: 'Invalid specialization' }, status: :unprocessable_entity
-      end
-    end
-  end
-
-  def render_updated_user(user, u_params)
-    update_user = User.find(user.id)
-    if update_user.update(u_params)
-      render json: user, status: :ok
-    else
-      render json: { error: user.errors }, status: :unprocessable_entity
-    end
-  end
-
 
 end
