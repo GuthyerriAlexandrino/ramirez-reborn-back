@@ -61,7 +61,6 @@ class UsersController < ApplicationController
     end
   end
 
-
   # DELETE /users/1
   # delete user by Id
   def destroy
@@ -69,6 +68,7 @@ class UsersController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.where(id: params[:id]).first
@@ -86,7 +86,6 @@ class UsersController < ApplicationController
     params.require(:user).permit(UserService.all_permited)
   end
 
-
   # PUT /users/1
   #  update user datas
   def update
@@ -95,10 +94,10 @@ class UsersController < ApplicationController
     return render json: { error: 'Invalid user token' }, status: :unprocessable_entity if user.id.to_s != params[:id]
 
     u_params = user_params
-    u_params[:photographer] = true if user.photographer = true
+    u_params[:photographer] = true if (user.photographer = true)
     u_params[:specialization].each do |s|
       unless SpecializationService.instance.specializations.include?(s)
-        return render json: { error: 'Invalid specialization' } , status: :unprocessable_entity
+        return render json: { error: 'Invalid specialization' }, status: :unprocessable_entity
       end
     end
     update_user = User.find(user.id)
