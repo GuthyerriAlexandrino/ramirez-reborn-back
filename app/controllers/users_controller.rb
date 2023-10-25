@@ -45,11 +45,14 @@ class UsersController < ApplicationController
   # Update user photo
   def profile_image
     user = authorize_request
-    return if user.nil?
+    return unless user
     bucket = FireStorageService.instance.img_bucket
-    file = params[:image]
-    filename = "#{user.name}/profile#{Rack::Mime::MIME_TYPES.invert[file.content_type]}"
-    bucket.create_file(file.tempfile, filename)
+    filename = "#{user.name}/profile.#{Rack::Mime::MIME_TYPES.invert[params[:image].content_type]}"
+    bucket.create_file(params[:image].tempfile, filename)
+    update_user_and_render_response(user, filename)
+  end
+  private
+  def update_user_and_render_response(user, filename)
     update_user = User.find(user.id)
     if update_user.update(profile_img: filename)
       render json: filename, status: :ok
@@ -57,6 +60,7 @@ class UsersController < ApplicationController
       render json: { error: user.errors }, status: :unprocessable_entity
     end
   end
+
 
   # DELETE /users/1
   # delete user by Id
