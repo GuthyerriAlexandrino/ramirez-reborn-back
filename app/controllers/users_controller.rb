@@ -27,7 +27,6 @@ class UsersController < ApplicationController
     user = authorize_request
     return if user.nil?
     return render json: { error: 'User cookie and id dont match' }, status: :bad_request if user.id.to_s != params[:id]
-
     render json: user, status: :ok
   end
 
@@ -47,7 +46,6 @@ class UsersController < ApplicationController
   def profile_image
     user = authorize_request
     return if user.nil?
-
     bucket = FireStorageService.instance.img_bucket
     file = params[:image]
     filename = "#{user.name}/profile#{Rack::Mime::MIME_TYPES.invert[file.content_type]}"
@@ -65,21 +63,17 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
   end
-
   private
-
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.where(id: params[:id]).first
   end
-
   def get_photographer
     user = authorize_request
     return nil if user.nil?
 
     User.find(params[:id])
   end
-
   # Only allow a list of trusted parameters through.
   def user_params
     params.require(:user).permit(UserService.all_permited)
@@ -91,7 +85,6 @@ class UsersController < ApplicationController
     user = authorize_request
     return if user.nil?
     return render json: { error: 'Invalid user token' }, status: :unprocessable_entity if user.id.to_s != params[:id]
-
     u_params = user_params
     u_params[:photographer] = true if (user.photographer = true)
     u_params[:specialization].each do |s|
@@ -100,11 +93,11 @@ class UsersController < ApplicationController
       end
     end
     update_user = User.find(user.id)
-
     if update_user.update(u_params)
       render json: user, status: :ok
     else
       render json: { error: user.errors }, status: :unprocessable_entity
     end
   end
+
 end
