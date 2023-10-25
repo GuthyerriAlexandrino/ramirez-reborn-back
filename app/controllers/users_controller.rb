@@ -17,6 +17,7 @@ class UsersController < ApplicationController
     @users = @users.any_of(*location) unless location.empty?
     render json: @users.page(params[:page])
   end
+
   # GET user/1
   # Search users by id
   def user_data
