@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # Class controller user
 class UsersController < ApplicationController
   ActionController::Parameters.action_on_unpermitted_parameters = :raise
