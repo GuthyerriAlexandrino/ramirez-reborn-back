@@ -8,37 +8,15 @@ class UsersController < ApplicationController
   # GET /users
   # Search all users by filter
   def index
-    render_pagination_error and return unless valid_pagination?(params[:page])
-
-    filters, location, order, price = prepare_filters(request.GET)
-
-    @users = fetch_filtered_users(filters, location, order, price)
+    return render json: { error: 'Page field must be integer' }, status: :bad_request unless FiltersService.check_pagination(params[:page])
+    filters = FiltersService.matching_params(request.GET)
+    location = FiltersService.location_params(request.GET[:location])
+    order = FiltersService.order_params(request.GET[:orderBy])
+    price = FiltersService.price_params(min_price: request.GET[:minPrice], max_price: request.GET[:maxPrice])
+    @users = User.where(filters.merge(price)).only(UserService.search_view).order_by(order)
+    @users = @users.any_of(*location) unless location.empty?
     render json: @users.page(params[:page])
   end
-
-  private
-
-  def valid_pagination?(page)
-    FiltersService.check_pagination(page)
-  end
-
-  def render_pagination_error
-    render json: { error: 'Page field must be integer' }, status: :bad_request
-  end
-
-  def prepare_filters(get_request)
-    FiltersService.matching_params(get_request)
-      FiltersService.location_params(get_request[:location])
-      FiltersService.order_params(get_request[:orderBy])
-      FiltersService.price_params(min_price: get_request[:minPrice], max_price: get_request[:maxPrice])
-  end
-
-  def fetch_filtered_users(filters, location, order, price)
-    users = User.where(filters.merge(price)).only(UserService.search_view).order_by(order)
-    users = users.any_of(*location) unless location.empty?
-    users
-  end
-
   # GET user/1
   # Search users by id
   def user_data
