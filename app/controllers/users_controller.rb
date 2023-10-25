@@ -13,7 +13,6 @@ class UsersController < ApplicationController
       return render json: { error: 'Page field must be integer' },
                     status: :bad_request
     end
-
     filters = FiltersService.matching_params(request.GET)
     location = FiltersService.location_params(request.GET[:location])
     order = FiltersService.order_params(request.GET[:orderBy])
