@@ -9,8 +9,8 @@ class UsersController < ApplicationController
   # GET /users
   # Search all users by filter
   def index
-
-    return render json: { error: 'Page field must be integer' }, status: :bad_request unless FiltersService.check_pagination(params[:page])
+    return render json: { error: 'Page field must be integer' },
+                  status: :bad_request unless FiltersService.check_pagination(params[:page])
 
     filters = FiltersService.matching_params(request.GET)
     location = FiltersService.location_params(request.GET[:location])
