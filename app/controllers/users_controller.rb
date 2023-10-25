@@ -63,7 +63,6 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
   end
-  private
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.where(id: params[:id]).first
@@ -88,8 +87,6 @@ class UsersController < ApplicationController
     u_params = process_user_params(user)
     render_updated_user(user, u_params)
   end
-
-  private
 
   def process_user_params(user)
     u_params = user_params
