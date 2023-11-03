@@ -1,0 +1,16 @@
+AllCops:
+  NewCops: enable
+  Include:
+    - 'app/**/*.rb'
+  Exclude:
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'lib/**/*'
+    - 'db/**/*'
+    - 'public/**/*'
+    - 'vendor/**/*'
+  TargetRubyVersion: 3.2
+
+require:
+  - rubocop-rails
+  - rubocop-rspec

@@ -11,32 +11,32 @@ hobbies = %W(Nenhum
             Industrial
             Natureza
             Subaquático
-            Cientifico 
+            Cientifico
             #{'Documentos Oficiais'}
             Aerofotografia
             Documentarista
             #{'Nu Artístico'}
-            #{'Modelos Dental'} 
+            #{'Modelos Dental'}
             Eróticas
-            Sensuais 
-            Animais 
+            Sensuais
+            Animais
             Books
-            Crianças 
-            Esportes 
-            Medicina 
+            Crianças
+            Esportes
+            Medicina
             #{'Festas Infantis'}
-            Produtos 
+            Produtos
             #{'Abstrata e Artística'}
             Cinema
           )
 
 rng = Random.new
 
-25.times do 
+25.times do
   password = Faker::Internet.password
-  User.create(
+  User.create!(
     name: Faker::Name.name,
-    email: Faker::Internet.safe_email,
+    email: Faker::Internet.email,
     password: password,
     password_confirmation: password,
     specialization: [hobbies[rng.rand(0...hobbies.size)]],
@@ -46,18 +46,18 @@ rng = Random.new
   )
 end
 
-25.times do 
+25.times do
   password = Faker::Internet.password
-  User.create(
+  User.create!(
     name: Faker::Name.name,
-    email: Faker::Internet.safe_email,
+    email: Faker::Internet.email,
     password: password,
     password_confirmation: password,
     photographer: false,
   )
 end
 
-User.create(
+User.create!(
   name: "Ramirez",
   email: "guthyerri@davi.alice",
   password: "e o que he man?",
