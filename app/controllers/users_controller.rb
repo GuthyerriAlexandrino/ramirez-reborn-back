@@ -32,10 +32,21 @@ class UsersController < ApplicationController
     render json: user, status: :ok
   end
 
+  # GET user/1/followers
+  def followers
+    photographer = get_photographer
+
+    render json: photographer.followers, status: :ok
+  rescue Mongoid::Errors::InvalidFind
+    render json: { error: 'Invalid photographer' }, status: :bad_request
+  rescue Mongoid::Errors::MongoidError => e
+    render json: { error: e.to_s.split[1] }, status: :internal_server_error
+  end
+
   # GET user/1/
   # Search photographers that the user is following
   def following
-    photographer = get_photographer
+    photographer = self.photographer
     render json: photographer.following, status: :ok
   rescue Mongoid::Errors::InvalidFind
     render json: { error: 'Invalid photographer' }, status: :bad_request
@@ -50,14 +61,58 @@ class UsersController < ApplicationController
     return if user.nil?
 
     bucket = FireStorageService.instance.img_bucket
-    file = params[:image]
-    filename = "#{user.name}/profile#{Rack::Mime::MIME_TYPES.invert[file.content_type]}"
-    bucket.create_file(file.tempfile, filename)
-    update_user = User.find(user.id)
-    if update_user.update(profile_img: filename)
+    filename = "#{user.name}/profile#{Rack::Mime::MIME_TYPES.invert[params[:image].content_type]}"
+    bucket.create_file(params[:image].tempfile, filename)
+    if User.find(user.id).update(profile_img: filename)
       render json: filename, status: :ok
     else
       render json: { error: user.errors }, status: :unprocessable_entity
     end
+  end
+
+  # PUT /users/1
+  def update
+    user = authorize_request
+    return if user.nil?
+    return render json: { error: 'Invalid user token' }, status: :unprocessable_entity if user.id.to_s != params[:id]
+
+    u_params = user_params
+    u_params[:photographer] = true if user.photographer
+    u_params[:specialization].each do |s|
+      unless SpecializationService.instance.specializations.include?(s)
+        return render json: { error: 'Invalid specialization' } , status: :unprocessable_entity
+      end
+    end
+    update_user = User.find(user.id)
+
+    if update_user.update(u_params)
+      render json: user, status: :ok
+    else
+      render json: { error: user.errors }, status: :unprocessable_entity
+    end
+  end
+
+  # DELETE /users/1
+  def destroy
+    @user.destroy
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.where(id: params[:id]).first
+  end
+
+  def photographer
+    user = authorize_request
+    return nil if user.nil?
+
+    User.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.require(:user).permit(UserService.all_permited)
   end
 end

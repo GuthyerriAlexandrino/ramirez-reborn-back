@@ -21,6 +21,8 @@ RSpec.configure do |config|
   SimpleCov.start 'rails' do
     enable_coverage :branch
     add_filter /^(?!app)/
+    add_group('Services', 'app/services')
+    enable_coverage_for_eval
   end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
