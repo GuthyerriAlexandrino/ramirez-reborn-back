@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # This module encapsulates like-related functionalities
-
 module LikeService
   # Method responsible for obtaining the like given by a user in a comment or post
   # @return [Object]
