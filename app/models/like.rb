@@ -8,6 +8,6 @@ class Like
   embedded_in :comment
   embedded_in :answer
 
-  #Validations
+  # Validations
   validates :user_id, presence: true
 end
