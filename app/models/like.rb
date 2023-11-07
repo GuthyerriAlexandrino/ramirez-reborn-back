@@ -7,4 +7,7 @@ class Like
   embedded_in :post
   embedded_in :comment
   embedded_in :answer
+
+  #Validations
+  validates :user_id, presence: true
 end
