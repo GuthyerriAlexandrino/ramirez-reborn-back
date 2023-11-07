@@ -12,6 +12,10 @@ module LikeService
     likeable.likes&.find(user_id) if likeable.instance_of?(Comment)
   end
 
+  # Method responsible for allowing a user to add or remove a like
+  # @return [Hash]
+  # @param user_id [Integer]
+  # @param likeable [Object]
   def self.like(user_id, likeable)
     like = get_like(user_id, likeable)
     if like.nil?
