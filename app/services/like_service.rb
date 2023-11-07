@@ -25,5 +25,4 @@ module LikeService
     like.destroy
     { json: 'Object destroyed', status: :ok }
   end
-
 end
