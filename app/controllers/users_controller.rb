@@ -3,23 +3,19 @@
 # Class controller user
 class UsersController < ApplicationController
   ActionController::Parameters.action_on_unpermitted_parameters = :raise
-  before_action :authorize_request, except: %i[create update show]
-  before_action :set_user, only: :show
+  Specialization = SpecializationService.instance
+  FireService = FireStorageService.instance
+  before_action :user_params, only: :update
 
   # GET /users
   # Search all users by filter
   def index
-    unless FiltersService.check_pagination(params[:page])
-      return render json: { error: 'Page field must be integer' },
-                    status: :bad_request
-    end
-    filters = FiltersService.matching_params(request.GET)
-    location = FiltersService.location_params(request.GET[:location])
-    order = FiltersService.order_params(request.GET[:orderBy])
-    price = FiltersService.price_params(min_price: request.GET[:minPrice], max_price: request.GET[:maxPrice])
-    @users = User.where(filters.merge(price)).only(UserService.search_view).order_by(order)
-    @users = @users.any_of(*location) unless location.empty?
-    render json: @users.page(params[:page])
+    return render UserView.wrong_pagination unless FiltersService.check_pagination(params[:page])
+
+    search_filters => filters, location
+    filter_all_users(filters)
+    @users.any_of!(*location).page(params[:page]) unless location.empty?
+    render json: @users
   end
 
   # GET user/1
@@ -60,9 +56,8 @@ class UsersController < ApplicationController
     user = authorize_request
     return if user.nil?
 
-    bucket = FireStorageService.instance.img_bucket
-    filename = "#{user.name}/profile#{Rack::Mime::MIME_TYPES.invert[params[:image].content_type]}"
-    bucket.create_file(params[:image].tempfile, filename)
+    filename = retrieve_filename
+    upload_image(filename)
     if User.find(user.id).update(profile_img: filename)
       render json: filename, status: :ok
     else
@@ -76,16 +71,8 @@ class UsersController < ApplicationController
     return if user.nil?
     return render json: { error: 'Invalid user token' }, status: :unprocessable_entity if user.id.to_s != params[:id]
 
-    u_params = user_params
-    u_params[:photographer] = true if user.photographer
-    u_params[:specialization].each do |s|
-      unless SpecializationService.instance.specializations.include?(s)
-        return render json: { error: 'Invalid specialization' } , status: :unprocessable_entity
-      end
-    end
-    update_user = User.find(user.id)
-
-    if update_user.update(u_params)
+    process_update_request(user)
+    if User.find(user.id).update(u_params)
       render json: user, status: :ok
     else
       render json: { error: user.errors }, status: :unprocessable_entity
@@ -113,6 +100,36 @@ class UsersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_params
-    params.require(:user).permit(UserService.all_permited)
+    @user_params = params.require(:user).permit(UserService.all_permited)
+  end
+
+  def search_filters
+    [
+      FiltersService.matching_params(request.GET).merge(
+        FiltersService.price_params(min_price: request.GET[:minPrice], max_price: request.GET[:maxPrice])
+      ),
+      FiltersService.location_params(request.GET[:location])
+    ]
+  end
+
+  def filter_all_users(filters)
+    order = FiltersService.order_params(request.GET[:orderBy])
+    @users = User.where(filters).only(UserService.search_view).order_by(order)
+  end
+
+  def retrieve_filename
+    "#{user.name}/profile#{Rack::Mime::MIME_TYPES.invert[params[:image].content_type]}"
+  end
+
+  def upload_image(filename)
+    bucket = FireService.img_bucket
+    bucket.upload_image(params[:image].tempfile, filename)
+  end
+
+  def process_update_request(user)
+    @user_params[:photographer] = true if user.photographer
+    @user_params[:specialization].each do |s|
+      return render UserView.invalid_specialization unless Specialization.specializations.include?(s)
+    end
   end
 end
