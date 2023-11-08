@@ -4,7 +4,6 @@ require 'google/cloud/storage'
 
 # Singleton class for Google Cloud Storage
 class FireStorageService
-  GOOGLE_APPLICATION_CREDENTIALS ||= nil
   # @!attribute [r] img_bucket
   #   @return [Google::Cloud::Storage#Bucket]
   attr_reader :img_bucket
@@ -24,5 +23,6 @@ class FireStorageService
 
     # Set the img_bucket attribute to a specific Google Cloud Storage bucket
     @img_bucket = @storage.bucket('ramirez-2bb46.appspot.com')
+  rescue StandardError => e
   end
 end
