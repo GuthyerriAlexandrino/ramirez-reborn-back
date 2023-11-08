@@ -23,5 +23,7 @@ class FireStorageService
 
     # Set the img_bucket attribute to a specific Google Cloud Storage bucket
     @img_bucket = @storage.bucket('ramirez-2bb46.appspot.com')
+  rescue StandardError => e
+    e
   end
 end

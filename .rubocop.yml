@@ -9,6 +9,8 @@ AllCops:
     - 'db/**/*'
     - 'public/**/*'
     - 'vendor/**/*'
+    - 'app/solar_parse.rb'
+    - 'app/views/*.rb'
   TargetRubyVersion: 3.2
 
 require:
