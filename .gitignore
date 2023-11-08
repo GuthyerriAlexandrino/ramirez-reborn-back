@@ -5,3 +5,5 @@ config/ramirez_firebase.key
 vendor
 log
 coverage
+.vs
+.vscode
