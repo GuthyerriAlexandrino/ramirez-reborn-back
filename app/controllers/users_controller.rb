@@ -3,7 +3,9 @@
 # Class controller user
 class UsersController < ApplicationController
   ActionController::Parameters.action_on_unpermitted_parameters = :raise
+  # SpecializationService module instance
   Specialization = SpecializationService.instance
+  # FireService module instance
   FireService = FireStorageService.instance
   before_action :user_params, only: :update
 

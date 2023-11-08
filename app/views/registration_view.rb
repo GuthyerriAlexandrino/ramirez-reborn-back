@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 # Module responsible for returning registration-related json views
 module RegistrationView
   def self.invalid_email

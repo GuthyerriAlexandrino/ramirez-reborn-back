@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-
 # Class responsible for login and register features
 class RegistrationController < ApplicationController
   ActionController::Parameters.action_on_unpermitted_parameters = :raise
