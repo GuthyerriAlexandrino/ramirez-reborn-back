@@ -1,0 +1,6 @@
+--no-private
+--exclude config/
+--exclude spec/
+--exclude lib/
+--exclude app/views
+--exclude app/solar_parse.rb
