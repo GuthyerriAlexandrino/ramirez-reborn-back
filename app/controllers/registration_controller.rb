@@ -3,6 +3,7 @@
 # Class responsible for login and register features
 class RegistrationController < ApplicationController
   ActionController::Parameters.action_on_unpermitted_parameters = :raise
+  before_action :register_params, only: :register
   # Defines what is a valid email
   VALID_EMAIL_REGEX = /\A([\w+\-]\.?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   # Login token expiration time
