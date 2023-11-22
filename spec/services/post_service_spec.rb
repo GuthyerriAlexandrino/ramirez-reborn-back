@@ -1,0 +1,80 @@
+require 'rails_helper'
+
+RSpec.describe PostService do
+    describe '.user_posts' do
+      it 'returns posts of a user' do
+        user = instance_double(User, id: '123', posts: [Post.new, Post.new])
+        allow(User).to receive(:find).with({ _id: user.id }).and_return(user)
+
+        posts = described_class.user_posts(user.id.to_s)
+
+        expect(posts).to eq(user.posts)
+      end
+
+      it 'returns an empty array if user has no posts' do
+        user = instance_double(User, id: '123', posts: [])
+        allow(User).to receive(:find).with({ _id: user.id }).and_return(user)
+
+        posts = described_class.user_posts(user.id.to_s)
+
+        expect(posts).to be_empty
+      end
+    end
+
+    describe '.post_params' do
+        it 'returns parameters for a post' do
+          params = described_class.post_params('Title', 10.5, 'uri')
+
+          expect(params).to eq({ title: 'Title', image: 'uri', price: 10.5 })
+        end
+
+        it 'returns parameters without price if price is nil' do
+          params = described_class.post_params('Title', nil, 'uri')
+
+          expect(params).to eq({ title: 'Title', image: 'uri' })
+        end
+      end
+
+      describe '.parse_filename' do
+        it 'returns a filename based on user name and content type' do
+          filename = described_class.parse_filename('username', 'image/jpeg')
+
+          expect(filename).to start_with('username/')
+          expect(filename).to include('.')
+        end
+      end
+
+      describe '.get_post' do
+        it 'returns the requested post of an author' do
+          post = instance_double(Post, id: '1')
+          author = instance_double(User, id: '123', posts: [post])
+
+          allow(author.posts).to receive(:find).with(post.id).and_return(post)
+          allow(User).to receive(:find).with(author.id).and_return(author)
+
+          retrieved_post = described_class.get_post(author.id.to_s, post.id.to_s)
+
+          expect(retrieved_post).to eq(post)
+        end
+
+        it 'raises an error if the author is invalid' do
+            invalid_author_id = 'invalid_author_id'
+            post_id = 'post_id'
+
+            allow(User).to receive(:find).and_return(nil)
+
+            expect {
+              described_class.get_post(invalid_author_id, post_id)
+            }.to raise_error(UserService::InvalidUserException, 'Invalid post author')
+          end
+
+          it 'raises an error if the post does not belong to the author' do
+            author = instance_double(User, id: '2')
+            post = instance_double(Post, id: '1')
+
+            expect {
+              described_class.get_post(author.id.to_s, post.id.to_s)
+             }.to raise_error(Mongoid::Errors::DocumentNotFound)
+          end
+        end
+  end
