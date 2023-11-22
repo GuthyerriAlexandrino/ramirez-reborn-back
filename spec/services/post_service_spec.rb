@@ -51,6 +51,15 @@ RSpec.describe PostService do
           expect(retrieved_post).to eq(post)
         end
     
-        
+        it 'raises an error if the author is invalid' do
+            invalid_author_id = 'invalid_author_id'
+            post_id = 'post_id'
+      
+            expect {
+              PostService.get_post(invalid_author_id, post_id)
+            }.to raise_error(UserService::InvalidUserException, 'Invalid post author')
+          end
+      
+          
   end
   
