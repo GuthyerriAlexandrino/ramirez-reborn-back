@@ -20,6 +20,15 @@ module PostService
     post[:price] = price.to_f unless price.nil?
     post
   end
-
+  
+  # Method responsible for parsing filename
+  # @return [String]
+  # @param user_name [String] 
+  # @param content_type [String] 
+    def self.parse_filename(user_name, content_type)
+      ext = Rack::Mime::MIME_TYPES.invert[content_type]
+      "#{user_name}/#{SecureRandom.uuid}#{ext}"
+    end
+  
     
   end
