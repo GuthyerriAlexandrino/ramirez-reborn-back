@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe PostService do
     describe '.user_posts' do
       it 'returns posts of a user' do
-        user = create(:user)
+        user = double(:user)
         create_list(:post, 5, user: user)
   
         posts = PostService.user_posts(user.id.to_s)
@@ -12,7 +12,7 @@ RSpec.describe PostService do
       end
   
       it 'returns an empty array if user has no posts' do
-        user = create(:user)
+        user = double(:user)
   
         posts = PostService.user_posts(user.id.to_s)
   
@@ -45,8 +45,8 @@ RSpec.describe PostService do
 
       describe '.get_post' do
         it 'returns the requested post of an author' do
-          author = create(:user)
-          post = create(:post, user: author)
+          author = double(:user)
+          post = double(:post, user: author)
     
           retrieved_post = PostService.get_post(author.id.to_s, post.id.to_s)
     
@@ -63,9 +63,9 @@ RSpec.describe PostService do
           end
       
           it 'returns nil if the post does not belong to the author' do
-            author = create(:user)
-            another_user = create(:user)
-            post = create(:post, user: another_user)
+            author = double(:user)
+            another_user = double(:user)
+            post = double(:post, user: another_user)
       
             retrieved_post = PostService.get_post(author.id.to_s, post.id.to_s)
       
