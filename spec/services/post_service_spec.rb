@@ -39,7 +39,6 @@ RSpec.describe PostService do
           expect(filename).to start_with('username/')
           expect(filename).to include('.')
         end
-      end    
-      
+      end
   end
   
