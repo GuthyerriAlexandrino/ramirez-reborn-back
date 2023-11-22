@@ -30,5 +30,15 @@ module PostService
       "#{user_name}/#{SecureRandom.uuid}#{ext}"
     end
   
-    
+    # Method responsible for getting an user post
+  # @return [Post]
+  # @param author_id [String] 
+  # @param post_id [String] 
+  def self.get_post(author_id, post_id)
+    author = User.find(author_id)
+    raise(UserService::InvalidUserException.new, 'Invalid post author') if author.nil?
+
+    author.posts&.find(post_id)
+  end
+  
   end
