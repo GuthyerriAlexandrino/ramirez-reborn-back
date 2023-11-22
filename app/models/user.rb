@@ -42,11 +42,18 @@ class User
   embeds_many :following
 
   # Methods
+
+  # Makes a user follow another
+  # @param [User]
+  # @return [Nil]
   def follow(other)
     following.create!(other)
     other.followers.create!(id)
   end
 
+  # Makes a user unfollow another
+  # @param [User]
+  # @return [Nil]
   def unfollow(other)
     following.destroy!(other)
     other.followers.destroy!(id)
