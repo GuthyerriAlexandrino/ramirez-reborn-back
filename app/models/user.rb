@@ -35,4 +35,20 @@ class User
   validates :state, length: { minimum: 2, maximum: 2 }, allow_nil: true
   validates :bio, length: { minimum: 20, maximum: 1000 }, allow_nil: true
   validates :email, uniqueness: true
+
+  # Embeddings
+  embeds_many :posts
+  embeds_many :followers
+  embeds_many :following
+
+  # Methods
+  def follow(other)
+    following.create!(other)
+    other.followers.create!(id)
+  end
+
+  def unfollow(other)
+    following.destroy!(other)
+    other.followers.destroy!(id)
+  end
 end
