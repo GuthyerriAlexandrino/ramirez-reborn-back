@@ -18,6 +18,20 @@ RSpec.describe PostService do
       end
     end
   
-   
+    describe '.post_params' do
+        it 'returns parameters for a post' do
+          params = PostService.post_params('Title', 10.5, 'uri')
+    
+          expect(params).to eq({ title: 'Title', image: 'uri', price: 10.5 })
+        end
+    
+        it 'returns parameters without price if price is nil' do
+          params = PostService.post_params('Title', nil, 'uri')
+    
+          expect(params).to eq({ title: 'Title', image: 'uri' })
+        end
+      end
+    
+    
   end
   
