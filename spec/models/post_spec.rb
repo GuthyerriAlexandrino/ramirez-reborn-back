@@ -7,5 +7,9 @@ RSpec.describe Post do
   
     it { is_expected.to validate_length_of(:title).within(1..160) }
     it { is_expected.to validate_numericality_of(:price).allow_nil.is_greater_than(0) }
+  
+    it { is_expected.to be_embedded_in(:user) }
+    it { is_expected.to embed_many(:likes) }
+    it { is_expected.to have_many(:comments) }
   end
   
