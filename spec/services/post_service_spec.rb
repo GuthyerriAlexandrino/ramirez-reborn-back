@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe PostService do
     describe '.user_posts' do
       it 'returns posts of a user' do
