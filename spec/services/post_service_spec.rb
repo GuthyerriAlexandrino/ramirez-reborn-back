@@ -32,6 +32,14 @@ RSpec.describe PostService do
         end
       end
     
+      describe '.parse_filename' do
+        it 'returns a filename based on user name and content type' do
+          filename = PostService.parse_filename('username', 'image/jpeg')
     
+          expect(filename).to start_with('username/')
+          expect(filename).to include('.')
+        end
+      end    
+      
   end
   
