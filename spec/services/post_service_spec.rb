@@ -40,5 +40,17 @@ RSpec.describe PostService do
           expect(filename).to include('.')
         end
       end
+
+      describe '.get_post' do
+        it 'returns the requested post of an author' do
+          author = create(:user)
+          post = create(:post, user: author)
+    
+          retrieved_post = PostService.get_post(author.id.to_s, post.id.to_s)
+    
+          expect(retrieved_post).to eq(post)
+        end
+    
+        
   end
   
