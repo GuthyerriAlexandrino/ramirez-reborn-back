@@ -6,14 +6,17 @@ class PostsController < ApplicationController
   before_action :set_posts, only: :index
   before_action :authorize_request, only: %i[show index]
 
+  # GET /posts/1
   def index
     render json: @post
   end
 
+  # GET /posts/1
   def show
     render json: @post
   end
 
+  # POST /posts
   def create
     user = authorize_request
     return if invalid_user_or_missing_image?(user)
@@ -23,11 +26,13 @@ class PostsController < ApplicationController
     upload_and_create_post(user)
   end
 
+  # POST /posts/1
   def like
     user = authorize_request
     nil if user.nil?
   end
 
+  # DELETE /posts/1
   def destroy
     user = authorize_request
     return if user.nil?
