@@ -60,6 +60,15 @@ RSpec.describe PostService do
             }.to raise_error(UserService::InvalidUserException, 'Invalid post author')
           end
       
-          
+          it 'returns nil if the post does not belong to the author' do
+            author = create(:user)
+            another_user = create(:user)
+            post = create(:post, user: another_user)
+      
+            retrieved_post = PostService.get_post(author.id.to_s, post.id.to_s)
+      
+            expect(retrieved_post).to be_nil
+          end
+        end
   end
   
