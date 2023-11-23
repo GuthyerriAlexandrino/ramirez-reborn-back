@@ -20,12 +20,12 @@ describe LikeService do
     context 'when like does not exist' do
       it 'returns nil' do
         user_id = 123
-      likeable = double('Likeable', likes: double('LikeCollection', find: nil))
+        likeable = double('Likeable', likes: double('LikeCollection', find: nil))
 
-      liked = LikeService.get_like(user_id, likeable)
+        liked = LikeService.get_like(user_id, likeable)
 
-      expect(likeable.likes).to have_received(:find).with(user_id).once
-      expect(liked).to be_nil
+        expect(likeable.likes).to have_received(:find).with(user_id).once
+        expect(liked).to be_nil
       end
     end
   end
