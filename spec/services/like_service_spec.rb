@@ -8,11 +8,11 @@ describe LikeService do
       it 'returns the like' do
         user_id = 123
         test_like = double('Like', user_id: user_id)
-        likeable = double('Likeable', likes: [test_like])
+        likeable = double('Likeable', likes: double('LikeCollection', find: test_like))
 
         liked = LikeService.get_like(user_id, likeable)
 
-        expect(likeable).to have_received(:likes).once
+        expect(likeable.likes).to have_received(:find).with(user_id).once
         expect(liked).to eq(test_like)
       end
     end
@@ -20,12 +20,12 @@ describe LikeService do
     context 'when like does not exist' do
       it 'returns nil' do
         user_id = 123
-        likeable = double('Likeable', likes: [])
+      likeable = double('Likeable', likes: double('LikeCollection', find: nil))
 
-        liked = LikeService.get_like(user_id, likeable)
+      liked = LikeService.get_like(user_id, likeable)
 
-        expect(likeable).to have_received(:likes).once
-        expect(liked).to be_nil
+      expect(likeable.likes).to have_received(:find).with(user_id).once
+      expect(liked).to be_nil
       end
     end
   end
@@ -34,7 +34,7 @@ describe LikeService do
     context 'when like does not exist' do
       it 'creates the like and returns success' do
         user_id = 123
-        likeable = double('Likeable', likes: double('LikeCollection'))
+        likeable = double('Likeable', likes: double('LikeCollection', find: nil))
         allow(likeable.likes).to receive(:create!)
 
         result = LikeService.like(user_id, likeable)
