@@ -30,4 +30,33 @@ describe LikeService do
     end
   end
 
+  describe '.like' do
+    context 'when like does not exist' do
+      it 'creates the like and returns success' do
+        user_id = 123
+        likeable = double('Likeable', likes: [])
+        allow(LikeService).to receive(:get_like).and_return(nil)
+        allow(likeable).to receive_message_chain(:likes, :create!)
+
+        result = LikeService.like(user_id, likeable)
+
+        expect(likeable.likes).to have_received(:create!).with(user_id: user_id).once
+        expect(result).to eq({ json: 'Object created', status: :ok })
+      end
+    end
+
+    context 'when like exists' do
+      it 'destroys the like and returns success' do
+        user_id = 123
+        test_like = double('Like', destroy: true)
+        likeable = double('Likeable', likes: [test_like])
+        allow(LikeService).to receive(:get_like).and_return(test_like)
+
+        result = LikeService.like(user_id, likeable)
+
+        expect(test_like).to have_received(:destroy).once
+        expect(result).to eq({ json: 'Object destroyed', status: :ok })
+      end
+    end
+  end
 end
