@@ -34,8 +34,7 @@ describe LikeService do
     context 'when like does not exist' do
       it 'creates the like and returns success' do
         user_id = 123
-        test_like = double('Like', destroy: false)
-        likeable = double('Likeable', likes: double('LikeCollection', find: nil, create!: test_like))
+        likeable = double('Likeable', likes: double('LikeCollection', find: nil, create!: true))
 
         result = LikeService.like(user_id, likeable)
 
