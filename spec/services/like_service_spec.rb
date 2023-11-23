@@ -34,9 +34,8 @@ describe LikeService do
     context 'when like does not exist' do
       it 'creates the like and returns success' do
         user_id = 123
-        likeable = double('Likeable', likes: [])
-        allow(LikeService).to receive(:get_like).and_return(nil)
-        allow(likeable).to receive_message_chain(:likes, :create!)
+        likeable = double('Likeable', likes: double('LikeCollection'))
+        allow(likeable.likes).to receive(:create!)
 
         result = LikeService.like(user_id, likeable)
 
