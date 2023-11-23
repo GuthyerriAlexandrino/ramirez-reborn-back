@@ -1,5 +1,6 @@
 require 'yard'
 
+# yardoc -o docs --no-private --exclude app/views "app/**/*.rb"
 task :generate_docs do
   YARD::Rake::YardocTask.new do |t|
     t.files   = ['app/**/*.rb']
