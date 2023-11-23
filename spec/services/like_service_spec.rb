@@ -34,11 +34,12 @@ describe LikeService do
     context 'when like does not exist' do
       it 'creates the like and returns success' do
         user_id = 123
-        likeable = double('Likeable', likes: double('LikeCollection', find: nil))
-        allow(likeable.likes).to receive(:create!)
+        test_like = double('Like', destroy: false)
+        likeable = double('Likeable', likes: double('LikeCollection', find: nil, create!: test_like))
 
         result = LikeService.like(user_id, likeable)
 
+        expect(likeable.likes).to have_received(:find).with(user_id).once
         expect(likeable.likes).to have_received(:create!).with(user_id: user_id).once
         expect(result).to eq({ json: 'Object created', status: :ok })
       end
