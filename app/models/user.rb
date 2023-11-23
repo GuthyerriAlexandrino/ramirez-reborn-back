@@ -44,7 +44,7 @@ class User
   # Methods
 
   # Makes a user follow another
-  # @param [User]
+  # @param other [User]
   # @return [Nil]
   def follow(other)
     following.create!(other)
@@ -52,7 +52,7 @@ class User
   end
 
   # Makes a user unfollow another
-  # @param [User]
+  # @param other [User]
   # @return [Nil]
   def unfollow(other)
     following.destroy!(other)
