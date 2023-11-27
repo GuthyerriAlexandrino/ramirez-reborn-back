@@ -12,5 +12,5 @@ class Post
   has_many :comments, dependent: :destroy
 
   validates :title, length: { minimum: 1, maximum: 160 }
-  validates :price, numericality: { greater_than: 0, allow_nil: true }
+  validates :price, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 end
