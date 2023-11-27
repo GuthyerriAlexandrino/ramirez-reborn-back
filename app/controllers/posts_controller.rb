@@ -4,15 +4,10 @@
 class PostsController < ApplicationController
   before_action :set_post, only: :show
   before_action :set_posts, only: :index
-  before_action :authorize_request, only: %i[show index]
+  before_action :authorize_request, only: %i[index]
 
   # GET /posts/1
   def index
-    render json: @post
-  end
-
-  # GET /posts/1
-  def show
     render json: @post
   end
 
@@ -29,7 +24,9 @@ class PostsController < ApplicationController
   # POST /posts/1
   def like
     user = authorize_request
-    nil if user.nil?
+    return ?? if user.nil?
+
+
   end
 
   # DELETE /posts/1
@@ -43,7 +40,7 @@ class PostsController < ApplicationController
   private
 
   def invalid_user_or_missing_image?(user)
-    user.nil? || params[:image].nil?
+    user.nil? || post_params[:image].nil?
   end
 
   def render_unauthorized
@@ -54,16 +51,16 @@ class PostsController < ApplicationController
     filename = upload_file(user)
     return unless filename
 
-    post_hash = PostService.post_params(params[:title], params[:price], filename)
+    post_hash = PostService.post_params(post_params[:title], post_params[:price], filename)
     create_post_and_handle_errors(user, post_hash)
   end
 
   def upload_file(user)
-    return unless user && params[:image]
+    return unless user && post_params[:image]
 
     bucket = FireStorageService.instance.img_bucket
-    file_uploaded = params[:image].tempfile
-    filename = PostService.parse_filename(user.name, params[:image].content_type)
+    file_uploaded = post_params[:image].tempfile
+    filename = PostService.parse_filename(user.name, post_params[:image].content_type)
     res = bucket.create_file(file_uploaded, filename)
     res ? filename : nil
   end
