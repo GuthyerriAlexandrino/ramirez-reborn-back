@@ -35,6 +35,8 @@ module PostService
   # @param author_id [String]
   # @param post_id [String]
   def self.get_post(post_id)
-    Post.find(post_id)
+    user = User.where('posts._id' => post_id).first
+    post_oid = BSON::ObjectId.from_string(post_id)
+    user.posts.detect { |p| p._id == post_oid }
   end
 end
