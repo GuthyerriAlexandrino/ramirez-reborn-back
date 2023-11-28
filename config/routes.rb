@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # resources :views
   # resources :answers
-  resources :comments
+  # resources :comments
   # resources :posts
   resources :specializations
   resources :users
