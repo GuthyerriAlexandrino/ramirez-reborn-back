@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   get '/comments/:id', to: 'comments#index'
   post '/comments', to: 'comments#create'
   post '/comments_like', to: 'comments#like'
-  delete '/comments/destroy/:id', to: 'comments#destroy'
+  delete '/comments/:id', to: 'comments#destroy'
 
   # User extra routes
   put '/user/profile_image', to: 'users#profile_image'
