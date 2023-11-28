@@ -11,6 +11,11 @@ class PostsController < ApplicationController
     render json: @post
   end
 
+  # GET /post/1
+  def show
+    render json: @post
+  end
+
   # POST /posts
   def create
     user = authorize_request
