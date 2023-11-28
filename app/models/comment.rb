@@ -6,6 +6,7 @@ class Comment
   include Mongoid::Timestamps
 
   field :user_id, type: BSON::ObjectId
+  field :user_name, type: String
   field :content, type: String
 
   # Validations

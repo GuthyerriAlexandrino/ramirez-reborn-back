@@ -20,7 +20,7 @@ class CommentsController < ApplicationController
     begin
       raise(*create_object_error) if @post.nil?
 
-      comment = @post.comments.create!({ user_id: user.id, content: comment_params[:content] })
+      comment = @post.comments.create!({ user_id: user.id, user_name: user.name, content: comment_params[:content] })
       render json: comment, status: :created
     rescue Mongoid::Errors => e
       render json: { error: e }, status: :bad_request
