@@ -3,7 +3,7 @@
 # Class responsible for all comment-related
 class CommentsController < ApplicationController
   Mongoid.raise_not_found_error = false
-  before_action :set_comment, only: :destroy
+  before_action :set_comment, only: %i[destroy like]
   before_action :set_post, only: :create
 
   # GET /comments/{post_id}
@@ -57,8 +57,11 @@ class CommentsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_comment
+    comment_id = request[:id].nil? ? comment_params[:id] : request[:id]
+    raise 'Missing param: id' if comment_id.nil?
+
     set_post
-    @comment = CommentService.get_comment(request[:id], @post)
+    @comment = CommentService.get_comment(comment_id, @post)
   end
 
   # Use callbacks to share common setup or constraints between actions.
