@@ -58,7 +58,7 @@ class UsersController < ApplicationController
     user = authorize_request
     return if user.nil?
 
-    filename = retrieve_filename
+    filename = retrieve_filename(user)
     upload_image(filename)
     if User.find(user.id).update(profile_img: filename)
       render json: filename, status: :ok
@@ -119,7 +119,7 @@ class UsersController < ApplicationController
     @users = User.where(filters).only(UserService.search_view).order_by(order)
   end
 
-  def retrieve_filename
+  def retrieve_filename(user)
     "#{user.name}/profile#{Rack::Mime::MIME_TYPES.invert[params[:image].content_type]}"
   end
 
