@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'user_service'
+require 'rails_helper'
 
 describe UserService do
   context 'When all parameters are allowed' do
