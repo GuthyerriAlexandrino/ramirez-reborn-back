@@ -273,7 +273,7 @@
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_decode'>decode</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_decoded'>decoded</span> <span class='op'>=</span> <span class='const'>JWT</span><span class='period'>.</span><span class='id identifier rubyid_decode'>decode</span><span class='lparen'>(</span><span class='id identifier rubyid_token'>token</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="#SECRET_KEY-constant" title="JsonWebToken::SECRET_KEY (constant)">SECRET_KEY</a></span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
-  <span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>HashWithIndifferentAccess</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_decoded'>decoded</span><span class='rparen'>)</span>
+  <span class='const'>ActiveSupport</span><span class='op'>::</span><span class='const'>HashWithIndifferentAccess</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_decoded'>decoded</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -369,7 +369,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Nov 23 13:26:27 2023 by
+  Generated on Tue Nov 28 23:21:22 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>

@@ -387,12 +387,12 @@
       <pre class="lines">
 
 
-85
-86
-87</pre>
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
@@ -428,7 +428,6 @@
       <pre class="lines">
 
 
-34
 35
 36
 37
@@ -436,10 +435,11 @@
 39
 40
 41
-42</pre>
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_followers'>followers</span>
   <span class='id identifier rubyid_photographer'>photographer</span> <span class='op'>=</span> <span class='id identifier rubyid_get_photographer'>get_photographer</span>
@@ -481,17 +481,17 @@
       <pre class="lines">
 
 
-46
 47
 48
 49
 50
 51
 52
-53</pre>
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_following'>following</span>
   <span class='id identifier rubyid_photographer'>photographer</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_photographer'>photographer</span>
@@ -539,7 +539,8 @@
 18
 19
 20
-21</pre>
+21
+22</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 14</span>
@@ -549,7 +550,8 @@
 
   <span class='id identifier rubyid_search_filters'>search_filters</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_filters'>filters</span><span class='comma'>,</span> <span class='id identifier rubyid_location'>location</span>
   <span class='id identifier rubyid_filter_all_users'>filter_all_users</span><span class='lparen'>(</span><span class='id identifier rubyid_filters'>filters</span><span class='rparen'>)</span>
-  <span class='ivar'>@users</span><span class='period'>.</span><span class='id identifier rubyid_any_of!'>any_of!</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:page</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='ivar'>@users</span><span class='period'>.</span><span class='id identifier rubyid_any_of!'>any_of!</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_location'>location</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='ivar'>@users</span> <span class='op'>=</span> <span class='ivar'>@users</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:page</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:page</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
   <span class='id identifier rubyid_render'>render</span> <span class='label'>json:</span> <span class='ivar'>@users</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -583,7 +585,6 @@
       <pre class="lines">
 
 
-57
 58
 59
 60
@@ -594,16 +595,17 @@
 65
 66
 67
-68</pre>
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_profile_image'>profile_image</span>
   <span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='id identifier rubyid_authorize_request'>authorize_request</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
 
-  <span class='id identifier rubyid_filename'>filename</span> <span class='op'>=</span> <span class='id identifier rubyid_retrieve_filename'>retrieve_filename</span>
+  <span class='id identifier rubyid_filename'>filename</span> <span class='op'>=</span> <span class='id identifier rubyid_retrieve_filename'>retrieve_filename</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_upload_image'>upload_image</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='label'>profile_img:</span> <span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_render'>render</span> <span class='label'>json:</span> <span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='symbol'>:ok</span>
@@ -642,7 +644,6 @@
       <pre class="lines">
 
 
-71
 72
 73
 74
@@ -653,10 +654,12 @@
 79
 80
 81
-82</pre>
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='id identifier rubyid_authorize_request'>authorize_request</span>
@@ -664,7 +667,8 @@
   <span class='kw'>return</span> <span class='id identifier rubyid_render'>render</span> <span class='label'>json:</span> <span class='lbrace'>{</span> <span class='label'>error:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Invalid user token</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='symbol'>:unprocessable_entity</span> <span class='kw'>if</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>!=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span>
 
   <span class='id identifier rubyid_process_update_request'>process_update_request</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='id identifier rubyid_u_params'>u_params</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span><span class='lparen'>(</span><span class='ivar'>@user_params</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_render'>render</span> <span class='label'>json:</span> <span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='symbol'>:ok</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_render'>render</span> <span class='label'>json:</span> <span class='lbrace'>{</span> <span class='label'>error:</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>status:</span> <span class='symbol'>:unprocessable_entity</span>
@@ -701,16 +705,16 @@
       <pre class="lines">
 
 
-25
 26
 27
 28
 29
 30
-31</pre>
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_user_data'>user_data</span>
   <span class='id identifier rubyid_user'>user</span> <span class='op'>=</span> <span class='id identifier rubyid_authorize_request'>authorize_request</span>
@@ -729,7 +733,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Nov 23 13:26:26 2023 by
+  Generated on Tue Nov 28 23:21:21 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>
