@@ -16,7 +16,8 @@ class UsersController < ApplicationController
 
     search_filters => filters, location
     filter_all_users(filters)
-    @users.any_of!(*location).page(params[:page]) unless location.empty?
+    @users.any_of!(*location) unless location.empty?
+    @users = @users.page(params[:page]) unless params[:page].nil?
     render json: @users
   end
 
