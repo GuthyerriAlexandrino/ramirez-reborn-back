@@ -46,11 +46,12 @@ class CommentsController < ApplicationController
     user = authorize_request
     return if user.nil?
 
-    unless user.id == Comment.find(params[:comment_id])
+    comment = Comment.find(params[:id])
+    unless user.id == comment.user_id
       return render json: { error: 'Specified user is not the owner of the comment' }, status: :bad_request
     end
 
-    @comment.destroy
+    comment.destroy
   end
 
   private
