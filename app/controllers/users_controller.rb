@@ -77,7 +77,7 @@ class UsersController < ApplicationController
     process_update_request(user)
     user = User.find(user.id)
     if user.update(@user_params)
-      render json: to_update, status: :ok
+      render json: user, status: :ok
     else
       render json: { error: user.errors }, status: :unprocessable_entity
     end
