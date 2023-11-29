@@ -26,14 +26,6 @@ class PostsController < ApplicationController
     upload_and_create_post(user)
   end
 
-  # POST /posts/1
-  def like
-    user = authorize_request
-    return ?? if user.nil?
-
-
-  end
-
   # DELETE /posts/1
   def destroy
     user = authorize_request

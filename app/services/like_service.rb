@@ -16,7 +16,7 @@ module LikeService
   # @param likeable [Post,Comment]
   def self.like(user_id, likeable)
     like = get_like(user_id, likeable)
-    p like
+
     if like.nil?
       likeable.likes.create!(user_id:)
       return { json: 'Object created', status: :ok }
