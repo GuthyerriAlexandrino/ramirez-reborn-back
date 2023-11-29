@@ -18,6 +18,7 @@ class FireStorageService
 
   # Constructor: initializes a new instance and connects to Google Cloud Storage
   def initialize
+    return if GOOGLE_APPLICATION_CREDENTIALS == :test
     # Initialize the Google Cloud Storage client with project ID and credentials
     @storage = Google::Cloud::Storage.new(project_id: 'ramirez-2bb46', credentials: GOOGLE_APPLICATION_CREDENTIALS)
 
