@@ -16,7 +16,8 @@ class UsersController < ApplicationController
 
     search_filters => filters, location
     filter_all_users(filters)
-    @users.any_of!(*location).page(params[:page]) unless location.empty?
+    @users.any_of!(*location) unless location.empty?
+    @users = @users.page(params[:page]) unless params[:page].nil?
     render json: @users
   end
 
@@ -58,7 +59,7 @@ class UsersController < ApplicationController
     user = authorize_request
     return if user.nil?
 
-    filename = retrieve_filename
+    filename = retrieve_filename(user)
     upload_image(filename)
     if User.find(user.id).update(profile_img: filename)
       render json: filename, status: :ok
@@ -74,7 +75,8 @@ class UsersController < ApplicationController
     return render json: { error: 'Invalid user token' }, status: :unprocessable_entity if user.id.to_s != params[:id]
 
     process_update_request(user)
-    if User.find(user.id).update(u_params)
+    user = User.find(user.id)
+    if user.update(@user_params)
       render json: user, status: :ok
     else
       render json: { error: user.errors }, status: :unprocessable_entity
@@ -119,13 +121,13 @@ class UsersController < ApplicationController
     @users = User.where(filters).only(UserService.search_view).order_by(order)
   end
 
-  def retrieve_filename
+  def retrieve_filename(user)
     "#{user.name}/profile#{Rack::Mime::MIME_TYPES.invert[params[:image].content_type]}"
   end
 
   def upload_image(filename)
     bucket = FireService.img_bucket
-    bucket.upload_image(params[:image].tempfile, filename)
+    bucket.create_file(params[:image].tempfile, filename)
   end
 
   def process_update_request(user)
