@@ -30,7 +30,7 @@ class User
 
   # Validations
   validates :name, length: { minimum: 1, maximum: 160 }
-  validates :services_price, length: { minimum: 2, maximum: 2 }, allow_nil: true
+  validates :services_price, length: { minimum: 0, maximum: Float::INFINITY }, allow_nil: true
   validates :city, length: { minimum: 1, maximum: 70 }, allow_nil: true
   validates :state, length: { minimum: 2, maximum: 2 }, allow_nil: true
   validates :bio, length: { minimum: 20, maximum: 1000 }, allow_nil: true
