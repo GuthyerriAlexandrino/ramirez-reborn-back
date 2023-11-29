@@ -19,6 +19,6 @@ class JsonWebToken
   # @return [String]
   def self.decode(token)
     decoded = JWT.decode(token, SECRET_KEY)[0]
-    ActiveRecord::HashWithIndifferentAccess.new(decoded)
+    ActiveSupport::HashWithIndifferentAccess.new(decoded)
   end
 end

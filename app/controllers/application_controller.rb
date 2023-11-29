@@ -13,9 +13,9 @@ class ApplicationController < ActionController::API
     @current_user = User.without(:password_digest).find(decoded[:user_id])
     @current_user
   rescue JWT::DecodeError => e
-    render json: { error: e.message }, status: :unauthorized
+    render json: { error: e.message }, status: :unauthorized and return nil
   rescue StandardError => e
-    render json: { error: e.message }, status: :internal_server_error
+    render json: { error: e.message }, status: :internal_server_error and return nil
   end
 
   private

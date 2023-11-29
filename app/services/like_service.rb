@@ -7,7 +7,7 @@ module LikeService
   # @param user_id [Integer]
   # @param likeable [Post,Comment]
   def self.get_like(user_id, likeable)
-    likeable.likes&.find(user_id)
+    likeable.likes.detect { |l| l.user_id == user_id }
   end
 
   # Method responsible for allowing a user to add or remove a like
@@ -16,6 +16,7 @@ module LikeService
   # @param likeable [Post,Comment]
   def self.like(user_id, likeable)
     like = get_like(user_id, likeable)
+
     if like.nil?
       likeable.likes.create!(user_id:)
       return { json: 'Object created', status: :ok }

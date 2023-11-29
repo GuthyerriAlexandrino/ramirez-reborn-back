@@ -8,11 +8,11 @@ describe LikeService do
       it 'returns the like' do
         user_id = 123
         test_like = double('Like', user_id: user_id)
-        likeable = double('Likeable', likes: double('LikeCollection', find: test_like))
+        likeable = double('Likeable', likes: double('LikeCollection', detect: test_like))
 
         liked = LikeService.get_like(user_id, likeable)
 
-        expect(likeable.likes).to have_received(:find).with(user_id).once
+        expect(likeable.likes).to have_received(:detect).once
         expect(liked).to eq(test_like)
       end
     end
@@ -20,11 +20,11 @@ describe LikeService do
     context 'when like does not exist' do
       it 'returns nil' do
         user_id = 123
-        likeable = double('Likeable', likes: double('LikeCollection', find: nil))
+        likeable = double('Likeable', likes: double('LikeCollection', detect: nil))
 
         liked = LikeService.get_like(user_id, likeable)
 
-        expect(likeable.likes).to have_received(:find).with(user_id).once
+        expect(likeable.likes).to have_received(:detect).once
         expect(liked).to be_nil
       end
     end
@@ -34,12 +34,12 @@ describe LikeService do
     context 'when like does not exist' do
       it 'creates the like and returns success' do
         user_id = 123
-        likeable = double('Likeable', likes: double('LikeCollection', find: nil, create!: true))
+        likeable = double('Likeable', likes: double('LikeCollection', detect: nil, create!: true))
 
         result = LikeService.like(user_id, likeable)
 
-        expect(likeable.likes).to have_received(:find).with(user_id).once
-        expect(likeable.likes).to have_received(:create!).with(user_id: user_id).once
+        expect(likeable.likes).to have_received(:detect).once
+        expect(likeable.likes).to have_received(:create!).with(user_id:).once
         expect(result).to eq({ json: 'Object created', status: :ok })
       end
     end

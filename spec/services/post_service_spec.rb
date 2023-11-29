@@ -49,32 +49,14 @@ RSpec.describe PostService do
           post = instance_double(Post, id: '1')
           author = instance_double(User, id: '123', posts: [post])
 
-          allow(author.posts).to receive(:find).with(post.id).and_return(post)
-          allow(User).to receive(:find).with(author.id).and_return(author)
+          allow(author.posts).to receive(:detect).and_return(post)
+          allow(User).to receive(:where).with('posts._id' => post.id).and_return(User)
+          allow(User).to receive(:first).and_return(author)
+          allow(BSON::ObjectId).to receive(:from_string).and_return(post.id)
 
-          retrieved_post = described_class.get_post(author.id.to_s, post.id.to_s)
+          retrieved_post = described_class.get_post(post.id.to_s)
 
           expect(retrieved_post).to eq(post)
         end
-
-        it 'raises an error if the author is invalid' do
-            invalid_author_id = 'invalid_author_id'
-            post_id = 'post_id'
-
-            allow(User).to receive(:find).and_return(nil)
-
-            expect {
-              described_class.get_post(invalid_author_id, post_id)
-            }.to raise_error(UserService::InvalidUserException, 'Invalid post author')
-          end
-
-          it 'raises an error if the post does not belong to the author' do
-            author = instance_double(User, id: '2')
-            post = instance_double(Post, id: '1')
-
-            expect {
-              described_class.get_post(author.id.to_s, post.id.to_s)
-             }.to raise_error(Mongoid::Errors::DocumentNotFound)
-          end
-        end
+      end
   end

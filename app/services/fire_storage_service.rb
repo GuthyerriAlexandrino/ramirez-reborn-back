@@ -18,12 +18,12 @@ class FireStorageService
 
   # Constructor: initializes a new instance and connects to Google Cloud Storage
   def initialize
+    return if GOOGLE_APPLICATION_CREDENTIALS == :test
+
     # Initialize the Google Cloud Storage client with project ID and credentials
     @storage = Google::Cloud::Storage.new(project_id: 'ramirez-2bb46', credentials: GOOGLE_APPLICATION_CREDENTIALS)
 
     # Set the img_bucket attribute to a specific Google Cloud Storage bucket
     @img_bucket = @storage.bucket('ramirez-2bb46.appspot.com')
-  rescue StandardError => e
-    e
   end
 end
