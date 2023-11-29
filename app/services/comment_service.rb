@@ -13,5 +13,6 @@ module CommentService
     comment
   end
 
+  # Custom Comment Exception
   class InvalidCommentException < StandardError; end
 end
