@@ -3,7 +3,7 @@
 # Class responsible for all comment-related
 class CommentsController < ApplicationController
   Mongoid.raise_not_found_error = false
-  before_action :set_comment, only: %i[destroy like]
+  before_action :set_comment, only: %i[like]
   before_action :set_post, only: :create
 
   # GET /comments/{post_id}
