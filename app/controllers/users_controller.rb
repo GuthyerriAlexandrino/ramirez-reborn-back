@@ -125,7 +125,7 @@ class UsersController < ApplicationController
 
   def upload_image(filename)
     bucket = FireService.img_bucket
-    bucket.upload_image(params[:image].tempfile, filename)
+    bucket.create_file(params[:image].tempfile, filename)
   end
 
   def process_update_request(user)
