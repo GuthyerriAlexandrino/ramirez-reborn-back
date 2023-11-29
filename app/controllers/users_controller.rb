@@ -75,10 +75,11 @@ class UsersController < ApplicationController
     return render json: { error: 'Invalid user token' }, status: :unprocessable_entity if user.id.to_s != params[:id]
 
     process_update_request(user)
-    if User.find(user.id).update(@user_params)
-      render json: user, status: :ok
+    to_update = User.find(user.id).update(@user_params)
+    if to_update.valid?
+      render json: to_update, status: :ok
     else
-      render json: { error: user.errors }, status: :unprocessable_entity
+      render json: { error: to_update.errors }, status: :unprocessable_entity
     end
   end
 
